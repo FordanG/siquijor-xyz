@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArticleCard from '@/components/articles/ArticleCard.astro';
+import { CATEGORIES } from '@/utils/constants';
+
+export async function getStaticPaths() {
+  const categories = Object.keys(CATEGORIES);
+
+  return categories.map((category) => ({
+    params: { category },
+    props: { category },
+  }));
+}
+
+interface Props {
+  category: string;
+}
+
+const { category } = Astro.props;
+const categoryInfo = CATEGORIES[category as keyof typeof CATEGORIES];
+
+// Get articles for this category
+const articles = await getCollection(
+  'articles',
+  ({ data }) => data.category === category && !data.draft
+);
+
+// Sort by publish date
+const sortedArticles = articles.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+---
+
+<BaseLayout
+  title={`${categoryInfo.name} - Siquijor Experiences`}
+  description={categoryInfo.description}
+>
+  <!-- Header Section -->
+  <section class="pt-32 pb-12 px-6 bg-jungle-700 dark:bg-volcanic-950">
+    <div class="max-w-7xl mx-auto">
+      <a
+        href="/articles"
+        class="inline-flex items-center gap-2 text-jungle-200 hover:text-white mb-6 transition-colors"
+      >
+        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12 19-7-7 7-7"></path>
+          <path d="M19 12H5"></path>
+        </svg>
+        All Articles
+      </a>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 font-display">
+        {categoryInfo.name}
+      </h1>
+      <p class="text-lg text-jungle-200 dark:text-volcanic-400 max-w-2xl">
+        {categoryInfo.description}
+      </p>
+    </div>
+  </section>
+
+  <!-- Category Filters -->
+  <section class="sticky top-16 md:top-20 z-30 bg-cream dark:bg-volcanic-900 border-b border-stone-200 dark:border-volcanic-700">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center gap-2 py-4 overflow-x-auto no-scrollbar">
+        <a
+          href="/articles"
+          class="px-4 py-2 rounded-full text-sm font-medium bg-stone-100 dark:bg-volcanic-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-volcanic-700 transition-colors whitespace-nowrap"
+        >
+          All
+        </a>
+        {Object.values(CATEGORIES).map((cat) => (
+          <a
+            href={`/category/${cat.slug}`}
+            class:list={[
+              'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors',
+              cat.slug === category
+                ? 'bg-jungle-700 text-white'
+                : 'bg-stone-100 dark:bg-volcanic-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-volcanic-700',
+            ]}
+          >
+            {cat.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section class="py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+      {sortedArticles.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sortedArticles.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              href={`/articles/${article.slug}`}
+              image={article.data.heroImage.src}
+              imageAlt={article.data.heroImage.alt}
+              category={article.data.category}
+              publishDate={article.data.publishDate}
+              difficulty={article.data.difficulty}
+              duration={article.data.duration}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-20">
+          <p class="text-stone-600 dark:text-volcanic-400 mb-4">
+            No articles in this category yet.
+          </p>
+          <a
+            href="/articles"
+            class="inline-flex items-center gap-2 text-jungle-700 dark:text-amber-400 font-medium hover:underline"
+          >
+            Browse all articles
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

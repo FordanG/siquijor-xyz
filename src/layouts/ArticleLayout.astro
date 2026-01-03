@@ -1,0 +1,346 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import ArticleHero from '@/components/articles/ArticleHero.astro';
+import TableOfContents from '@/components/articles/TableOfContents.astro';
+import AuthorBio from '@/components/articles/AuthorBio.astro';
+import RelatedArticles from '@/components/articles/RelatedArticles.astro';
+import DifficultyRating from '@/components/articles/DifficultyRating.astro';
+import SchemaMarkup from '@/components/seo/SchemaMarkup.astro';
+import {
+  generateArticleSchema,
+  generateTouristAttractionSchema,
+  generateFAQSchema,
+} from '@/utils/schema';
+import { formatPriceRange, getGoogleMapsUrl, calculateReadingTime } from '@/utils/helpers';
+import { SITE } from '@/utils/constants';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    keywords: string[];
+    ogImage: string;
+    schemaType: string;
+    category: string;
+    tags: string[];
+    publishDate: Date;
+    updatedDate?: Date;
+    author: {
+      name: string;
+      avatar?: string;
+      bio?: string;
+    };
+    heroImage: {
+      src: string;
+      alt: string;
+    };
+    location?: {
+      name: string;
+      municipality: string;
+      coordinates?: { lat: number; lng: number };
+      googleMapsUrl?: string;
+    };
+    difficulty?: string;
+    duration?: string;
+    bestTime?: string;
+    priceRange?: { min: number; max: number; currency: string };
+    requirements?: string[];
+    gearList?: string[];
+    faqs?: { question: string; answer: string }[];
+    relatedArticles?: string[];
+  };
+  headings: { depth: number; slug: string; text: string }[];
+  rawContent: string;
+  slug: string;
+}
+
+const { frontmatter, headings, rawContent, slug } = Astro.props;
+const {
+  title,
+  description,
+  keywords,
+  ogImage,
+  schemaType,
+  category,
+  publishDate,
+  updatedDate,
+  author,
+  heroImage,
+  location,
+  difficulty,
+  duration,
+  bestTime,
+  priceRange,
+  requirements,
+  gearList,
+  faqs,
+  relatedArticles,
+} = frontmatter;
+
+// Calculate reading time
+const readingTime = calculateReadingTime(rawContent);
+
+// Build article URL (slug already includes category path)
+const articleUrl = new URL(`/articles/${slug}`, SITE.url).toString();
+
+// Generate schemas
+const schemas: object[] = [];
+
+// Article schema
+schemas.push(
+  generateArticleSchema({
+    title,
+    description,
+    url: articleUrl,
+    image: new URL(ogImage || heroImage.src, SITE.url).toString(),
+    publishDate: new Date(publishDate),
+    modifiedDate: updatedDate ? new Date(updatedDate) : undefined,
+    author: author.name,
+    category,
+  })
+);
+
+// Tourist attraction schema (if location exists)
+if (location && schemaType === 'TouristAttraction') {
+  schemas.push(
+    generateTouristAttractionSchema({
+      name: location.name,
+      description,
+      url: articleUrl,
+      image: new URL(heroImage.src, SITE.url).toString(),
+      address: location.name,
+      municipality: location.municipality,
+      coordinates: location.coordinates,
+      priceRange: priceRange ? formatPriceRange(priceRange.min, priceRange.max) : undefined,
+    })
+  );
+}
+
+// FAQ schema
+if (faqs && faqs.length > 0) {
+  schemas.push(generateFAQSchema({ url: articleUrl, faqs }));
+}
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={ogImage || heroImage.src}
+  type="article"
+  publishDate={new Date(publishDate)}
+  modifiedDate={updatedDate ? new Date(updatedDate) : undefined}
+  keywords={keywords}
+  author={author.name}
+  transparentHeader={true}
+>
+  <SchemaMarkup schema={schemas} />
+
+  <article>
+    <!-- Hero -->
+    <ArticleHero
+      title={title}
+      description={description}
+      image={heroImage.src}
+      imageAlt={heroImage.alt}
+      category={category}
+      publishDate={new Date(publishDate)}
+      updatedDate={updatedDate ? new Date(updatedDate) : undefined}
+      author={author}
+      difficulty={difficulty}
+      duration={duration}
+      readingTime={readingTime}
+    />
+
+    <!-- Content Grid -->
+    <div class="max-w-7xl mx-auto px-6 py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4 xl:col-span-3 order-2 lg:order-1">
+          <div class="lg:sticky lg:top-24 space-y-6">
+            <!-- Table of Contents -->
+            <TableOfContents headings={headings} />
+
+            <!-- Quick Facts -->
+            {(difficulty || duration || bestTime || priceRange || location) && (
+              <div class="bg-white dark:bg-volcanic-800 rounded-2xl border border-stone-200 dark:border-volcanic-700 p-6">
+                <h3 class="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-4">
+                  Quick Facts
+                </h3>
+
+                <dl class="space-y-4">
+                  {difficulty && (
+                    <div>
+                      <dt class="text-xs font-medium text-stone-500 dark:text-volcanic-400 uppercase tracking-wider mb-1">
+                        Difficulty
+                      </dt>
+                      <dd>
+                        <DifficultyRating difficulty={difficulty as any} showDescription={false} size="sm" />
+                      </dd>
+                    </div>
+                  )}
+
+                  {duration && (
+                    <div>
+                      <dt class="text-xs font-medium text-stone-500 dark:text-volcanic-400 uppercase tracking-wider mb-1">
+                        Duration
+                      </dt>
+                      <dd class="flex items-center gap-2 text-stone-900 dark:text-stone-100">
+                        <svg class="w-4 h-4 text-jungle-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"></circle>
+                          <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        {duration}
+                      </dd>
+                    </div>
+                  )}
+
+                  {bestTime && (
+                    <div>
+                      <dt class="text-xs font-medium text-stone-500 dark:text-volcanic-400 uppercase tracking-wider mb-1">
+                        Best Time
+                      </dt>
+                      <dd class="text-stone-900 dark:text-stone-100">
+                        {bestTime}
+                      </dd>
+                    </div>
+                  )}
+
+                  {priceRange && (
+                    <div>
+                      <dt class="text-xs font-medium text-stone-500 dark:text-volcanic-400 uppercase tracking-wider mb-1">
+                        Cost
+                      </dt>
+                      <dd class="text-stone-900 dark:text-stone-100">
+                        {formatPriceRange(priceRange.min, priceRange.max)}
+                      </dd>
+                    </div>
+                  )}
+
+                  {location && (
+                    <div>
+                      <dt class="text-xs font-medium text-stone-500 dark:text-volcanic-400 uppercase tracking-wider mb-1">
+                        Location
+                      </dt>
+                      <dd>
+                        {location.coordinates ? (
+                          <a
+                            href={location.googleMapsUrl || getGoogleMapsUrl(location.coordinates.lat, location.coordinates.lng, location.name)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-2 text-jungle-700 dark:text-amber-400 hover:underline"
+                          >
+                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                              <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            {location.name}
+                          </a>
+                        ) : (
+                          <span class="text-stone-900 dark:text-stone-100">{location.name}</span>
+                        )}
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            )}
+
+            <!-- Requirements / Gear -->
+            {(requirements?.length || gearList?.length) && (
+              <div class="bg-white dark:bg-volcanic-800 rounded-2xl border border-stone-200 dark:border-volcanic-700 p-6">
+                {requirements?.length && (
+                  <div class="mb-6">
+                    <h3 class="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-3">
+                      Requirements
+                    </h3>
+                    <ul class="space-y-2">
+                      {requirements.map((req) => (
+                        <li class="flex items-start gap-2 text-sm text-stone-600 dark:text-volcanic-400">
+                          <svg class="w-4 h-4 text-jungle-600 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6 9 17l-5-5"></path>
+                          </svg>
+                          {req}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {gearList?.length && (
+                  <div>
+                    <h3 class="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-3">
+                      Recommended Gear
+                    </h3>
+                    <ul class="space-y-2">
+                      {gearList.map((item) => (
+                        <li class="flex items-start gap-2 text-sm text-stone-600 dark:text-volcanic-400">
+                          <svg class="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                            <path d="M3 6h18"></path>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                          </svg>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="lg:col-span-8 xl:col-span-9 order-1 lg:order-2">
+          <!-- Article Content -->
+          <div class="prose-article">
+            <slot />
+          </div>
+
+          <!-- FAQ Section -->
+          {faqs && faqs.length > 0 && (
+            <section class="mt-16">
+              <h2 class="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+                Frequently Asked Questions
+              </h2>
+
+              <div class="space-y-4">
+                {faqs.map((faq, index) => (
+                  <details class="group bg-white dark:bg-volcanic-800 rounded-xl border border-stone-200 dark:border-volcanic-700 overflow-hidden">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer list-none">
+                      <span class="font-medium text-stone-900 dark:text-stone-100">
+                        {faq.question}
+                      </span>
+                      <svg class="w-5 h-5 text-stone-400 group-open:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="m6 9 6 6 6-6"></path>
+                      </svg>
+                    </summary>
+                    <div class="px-4 pb-4 text-stone-600 dark:text-volcanic-400">
+                      {faq.answer}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Author Bio -->
+          <div class="mt-16">
+            <AuthorBio
+              name={author.name}
+              avatar={author.avatar}
+              bio={author.bio}
+            />
+          </div>
+
+          <!-- Related Articles -->
+          <RelatedArticles
+            currentSlug={slug}
+            relatedSlugs={relatedArticles}
+            category={category}
+          />
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

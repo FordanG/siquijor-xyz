@@ -1,0 +1,150 @@
+---
+import { formatDate, getDifficultyColor, getCategoryColor } from '@/utils/helpers';
+import { CATEGORIES } from '@/utils/constants';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  category: string;
+  publishDate: Date;
+  updatedDate?: Date;
+  author: {
+    name: string;
+    avatar?: string;
+  };
+  difficulty?: string;
+  duration?: string;
+  readingTime?: number;
+}
+
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  category,
+  publishDate,
+  updatedDate,
+  author,
+  difficulty,
+  duration,
+  readingTime,
+} = Astro.props;
+
+const categoryInfo = CATEGORIES[category as keyof typeof CATEGORIES];
+---
+
+<header class="relative">
+  <!-- Hero Image -->
+  <div class="relative h-[50vh] md:h-[60vh] lg:h-[70vh] overflow-hidden">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 hero-gradient dark:hero-gradient-dark"></div>
+  </div>
+
+  <!-- Content Overlay -->
+  <div class="absolute inset-0 flex items-end">
+    <div class="max-w-4xl mx-auto px-6 pb-12 md:pb-16 w-full">
+      <!-- Breadcrumbs -->
+      <div class="mb-6">
+        <Breadcrumbs
+          variant="light"
+          items={[
+            { label: categoryInfo?.name ?? category, href: `/category/${category}` },
+            { label: title },
+          ]}
+        />
+      </div>
+
+      <!-- Category Badge -->
+      <div class="mb-4">
+        <span class:list={[
+          'inline-flex items-center px-3 py-1 rounded-full text-sm font-medium',
+          getCategoryColor(category),
+        ]}>
+          {categoryInfo?.name ?? category}
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight font-display">
+        {title}
+      </h1>
+
+      <!-- Description -->
+      <p class="text-lg md:text-xl text-white/90 mb-6 max-w-2xl">
+        {description}
+      </p>
+
+      <!-- Meta Row -->
+      <div class="flex flex-wrap items-center gap-4 text-sm text-white/80">
+        <!-- Author -->
+        <div class="flex items-center gap-2">
+          {author.avatar ? (
+            <img
+              src={author.avatar}
+              alt={author.name}
+              class="w-8 h-8 rounded-full object-cover border-2 border-white/20"
+            />
+          ) : (
+            <div class="w-8 h-8 rounded-full bg-jungle-600 flex items-center justify-center text-white text-sm font-medium">
+              {author.name.charAt(0)}
+            </div>
+          )}
+          <span>{author.name}</span>
+        </div>
+
+        <span class="w-1 h-1 rounded-full bg-white/40"></span>
+
+        <!-- Date -->
+        <time datetime={publishDate.toISOString()}>
+          {formatDate(publishDate)}
+        </time>
+
+        {updatedDate && (
+          <>
+            <span class="text-white/60">(Updated {formatDate(updatedDate)})</span>
+          </>
+        )}
+
+        {readingTime && (
+          <>
+            <span class="w-1 h-1 rounded-full bg-white/40"></span>
+            <span>{readingTime} min read</span>
+          </>
+        )}
+
+        {difficulty && (
+          <>
+            <span class="w-1 h-1 rounded-full bg-white/40"></span>
+            <span class:list={[
+              'px-2 py-0.5 rounded text-xs font-medium',
+              getDifficultyColor(difficulty),
+            ]}>
+              {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+            </span>
+          </>
+        )}
+
+        {duration && (
+          <>
+            <span class="w-1 h-1 rounded-full bg-white/40"></span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              {duration}
+            </span>
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+</header>

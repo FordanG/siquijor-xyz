@@ -1,0 +1,128 @@
+---
+import { formatDate, getDifficultyColor, getCategoryColor } from '@/utils/helpers';
+import { CATEGORIES } from '@/utils/constants';
+
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  image: string;
+  imageAlt: string;
+  category: string;
+  publishDate: Date;
+  difficulty?: string;
+  duration?: string;
+  featured?: boolean;
+}
+
+const {
+  title,
+  description,
+  href,
+  image,
+  imageAlt,
+  category,
+  publishDate,
+  difficulty,
+  duration,
+  featured = false,
+} = Astro.props;
+
+const categoryInfo = CATEGORIES[category as keyof typeof CATEGORIES];
+---
+
+<article class:list={[
+  'group adventure-card',
+  featured && 'md:col-span-2',
+]}>
+  <a href={href} class="block">
+    <!-- Image Container -->
+    <div class:list={[
+      'relative overflow-hidden rounded-t-2xl',
+      featured ? 'aspect-article' : 'aspect-card',
+    ]}>
+      <img
+        src={image}
+        alt={imageAlt}
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        loading="lazy"
+      />
+
+      <!-- Category Badge -->
+      <div class="absolute top-4 left-4">
+        <span class:list={[
+          'inline-flex items-center px-3 py-1 rounded-full text-xs font-medium',
+          getCategoryColor(category),
+        ]}>
+          {categoryInfo?.name ?? category}
+        </span>
+      </div>
+
+      <!-- Featured Badge -->
+      {featured && (
+        <div class="absolute top-4 right-4">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-400 text-jungle-900">
+            Featured
+          </span>
+        </div>
+      )}
+
+      <!-- Gradient Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="p-5">
+      <!-- Meta Row -->
+      <div class="flex items-center gap-3 mb-3 text-sm text-stone-500 dark:text-volcanic-400">
+        <time datetime={publishDate.toISOString()}>
+          {formatDate(publishDate)}
+        </time>
+
+        {difficulty && (
+          <>
+            <span class="w-1 h-1 rounded-full bg-stone-300 dark:bg-volcanic-600"></span>
+            <span class:list={[
+              'px-2 py-0.5 rounded text-xs font-medium',
+              getDifficultyColor(difficulty),
+            ]}>
+              {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+            </span>
+          </>
+        )}
+
+        {duration && (
+          <>
+            <span class="w-1 h-1 rounded-full bg-stone-300 dark:bg-volcanic-600"></span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              {duration}
+            </span>
+          </>
+        )}
+      </div>
+
+      <!-- Title -->
+      <h3 class="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2 line-clamp-2 group-hover:text-jungle-700 dark:group-hover:text-amber-400 transition-colors">
+        {title}
+      </h3>
+
+      <!-- Description -->
+      <p class="text-sm text-stone-600 dark:text-volcanic-400 line-clamp-2">
+        {description}
+      </p>
+
+      <!-- Read More -->
+      <div class="mt-4 flex items-center text-sm font-medium text-jungle-700 dark:text-amber-400 group-hover:gap-2 transition-all">
+        <span>Read more</span>
+        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </div>
+    </div>
+  </a>
+</article>

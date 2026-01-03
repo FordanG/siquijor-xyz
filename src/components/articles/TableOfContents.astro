@@ -1,0 +1,68 @@
+---
+interface TocItem {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: TocItem[];
+}
+
+const { headings } = Astro.props;
+
+// Filter to only H2 and H3
+const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+---
+
+{filteredHeadings.length > 0 && (
+  <nav class="bg-white dark:bg-volcanic-800 rounded-2xl border border-stone-200 dark:border-volcanic-700 p-6">
+    <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-4">
+      Table of Contents
+    </h2>
+
+    <ul class="space-y-2">
+      {filteredHeadings.map((heading) => (
+        <li
+          class:list={[
+            heading.depth === 3 && 'ml-4',
+          ]}
+        >
+          <a
+            href={`#${heading.slug}`}
+            class:list={[
+              'block text-stone-600 dark:text-volcanic-400 hover:text-jungle-700 dark:hover:text-amber-400 transition-colors',
+              heading.depth === 2 ? 'text-sm font-medium' : 'text-sm',
+            ]}
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  // Highlight current section in TOC
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.getAttribute('id');
+        const link = document.querySelector(`nav a[href="#${id}"]`);
+
+        if (entry.isIntersecting) {
+          document.querySelectorAll('nav a').forEach((a) => {
+            a.classList.remove('text-jungle-700', 'dark:text-amber-400', 'font-semibold');
+          });
+          link?.classList.add('text-jungle-700', 'dark:text-amber-400', 'font-semibold');
+        }
+      });
+    },
+    { rootMargin: '-100px 0px -80% 0px' }
+  );
+
+  document.querySelectorAll('article h2[id], article h3[id]').forEach((heading) => {
+    observer.observe(heading);
+  });
+</script>

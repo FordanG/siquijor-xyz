@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleCard from '@/components/articles/ArticleCard.astro';
+
+// Get featured articles or latest if none featured
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+let featuredArticles = allArticles.filter((a) => a.data.featured);
+
+// If no featured, get latest 3
+if (featuredArticles.length === 0) {
+  featuredArticles = allArticles
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+    .slice(0, 3);
+} else {
+  featuredArticles = featuredArticles.slice(0, 3);
+}
+---
+
+<section class="py-20 px-6 bg-cream dark:bg-volcanic-950">
+  <div class="max-w-7xl mx-auto">
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4 font-display">
+          Featured Experiences
+        </h2>
+        <p class="text-stone-600 dark:text-volcanic-400 max-w-xl">
+          Hand-picked adventures that showcase the best of Siquijor's mystical beauty.
+        </p>
+      </div>
+
+      <a
+        href="/articles"
+        class="inline-flex items-center gap-2 text-jungle-700 dark:text-amber-400 font-medium hover:gap-3 transition-all"
+      >
+        View all articles
+        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Articles Grid -->
+    {featuredArticles.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredArticles.map((article) => (
+          <ArticleCard
+            title={article.data.title}
+            description={article.data.description}
+            href={`/articles/${article.slug}`}
+            image={article.data.heroImage.src}
+            imageAlt={article.data.heroImage.alt}
+            category={article.data.category}
+            publishDate={article.data.publishDate}
+            difficulty={article.data.difficulty}
+            duration={article.data.duration}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="text-center text-stone-500 dark:text-volcanic-400 py-12">
+        New experiences coming soon!
+      </p>
+    )}
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/home/Hero.astro';
+import ExperienceGrid from '@/components/home/ExperienceGrid.astro';
+import FeaturedExperiences from '@/components/home/FeaturedExperiences.astro';
+import QuickLinks from '@/components/home/QuickLinks.astro';
+import Newsletter from '@/components/home/Newsletter.astro';
+---
+
+<BaseLayout
+  title="Experience Siquijor Island"
+  description="Your guide to authentic Siquijor experiences. Discover cliff jumping, traditional healing, stunning photography spots, and hidden gems on the mystical island of fire."
+  transparentHeader={true}
+>
+  <Hero />
+  <ExperienceGrid />
+  <FeaturedExperiences />
+  <QuickLinks />
+  <Newsletter />
+</BaseLayout>

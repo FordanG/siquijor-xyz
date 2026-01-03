@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+  currentSlug: string;
+  relatedSlugs?: string[];
+  category?: string;
+  limit?: number;
+}
+
+const { currentSlug, relatedSlugs = [], category, limit = 3 } = Astro.props;
+
+// Get all articles
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+
+// Filter related articles
+let relatedArticles = [];
+
+if (relatedSlugs.length > 0) {
+  // Use explicitly defined related articles
+  relatedArticles = allArticles.filter((article) =>
+    relatedSlugs.includes(article.slug) && article.slug !== currentSlug
+  );
+}
+
+// If not enough related articles, fill with same category
+if (relatedArticles.length < limit && category) {
+  const sameCategoryArticles = allArticles.filter(
+    (article) =>
+      article.data.category === category &&
+      article.slug !== currentSlug &&
+      !relatedSlugs.includes(article.slug)
+  );
+
+  relatedArticles = [
+    ...relatedArticles,
+    ...sameCategoryArticles.slice(0, limit - relatedArticles.length),
+  ];
+}
+
+// If still not enough, add recent articles
+if (relatedArticles.length < limit) {
+  const recentArticles = allArticles
+    .filter(
+      (article) =>
+        article.slug !== currentSlug &&
+        !relatedArticles.some((r) => r.slug === article.slug)
+    )
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+    .slice(0, limit - relatedArticles.length);
+
+  relatedArticles = [...relatedArticles, ...recentArticles];
+}
+
+// Limit to requested amount
+relatedArticles = relatedArticles.slice(0, limit);
+---
+
+{relatedArticles.length > 0 && (
+  <section class="mt-16">
+    <h2 class="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-8 font-display">
+      Related Experiences
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {relatedArticles.map((article) => (
+        <ArticleCard
+          title={article.data.title}
+          description={article.data.description}
+          href={`/articles/${article.slug}`}
+          image={article.data.heroImage.src}
+          imageAlt={article.data.heroImage.alt}
+          category={article.data.category}
+          publishDate={article.data.publishDate}
+          difficulty={article.data.difficulty}
+          duration={article.data.duration}
+        />
+      ))}
+    </div>
+  </section>
+)}

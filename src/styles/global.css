@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode colors */
+    --color-bg: 253 252 248; /* cream */
+    --color-bg-secondary: 255 255 255;
+    --color-text: 87 83 78; /* stone-600 */
+    --color-text-muted: 120 113 108; /* stone-500 */
+    --color-heading: 28 25 23; /* stone-900 */
+    --color-border: 231 229 228; /* stone-200 */
+    --color-primary: 26 77 46; /* jungle-700 */
+    --color-accent: 242 169 34; /* amber-400 */
+  }
+
+  .dark {
+    /* Dark mode colors */
+    --color-bg: 24 24 27; /* volcanic-900 */
+    --color-bg-secondary: 39 39 42; /* volcanic-800 */
+    --color-text: 212 212 216; /* volcanic-300 */
+    --color-text-muted: 161 161 170; /* volcanic-400 */
+    --color-heading: 250 250 250; /* volcanic-50 */
+    --color-border: 63 63 70; /* volcanic-700 */
+    --color-primary: 143 195 175; /* jungle-300 */
+    --color-accent: 252 211 77; /* amber-300 */
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+  }
+
+  /* Prevent flash of unstyled content on theme toggle */
+  html.dark {
+    color-scheme: dark;
+  }
+}
+
+@layer components {
+  /* Adventure Card Styles */
+  .adventure-card {
+    @apply bg-white dark:bg-volcanic-800 rounded-2xl border border-stone-200 dark:border-volcanic-700 overflow-hidden transition-all duration-300;
+  }
+
+  .adventure-card:hover {
+    @apply shadow-xl shadow-stone-200/50 dark:shadow-volcanic-900/50 border-jungle-200 dark:border-jungle-600 -translate-y-1;
+  }
+
+  /* Difficulty Badges */
+  .badge-easy {
+    @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300;
+  }
+
+  .badge-moderate {
+    @apply bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300;
+  }
+
+  .badge-challenging {
+    @apply bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300;
+  }
+
+  .badge-expert {
+    @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-jungle-700 hover:bg-jungle-600 text-white font-medium px-6 py-3 rounded-full transition-all duration-200 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply bg-amber-400 hover:bg-amber-500 text-jungle-900 font-medium px-6 py-3 rounded-full transition-all duration-200 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-stone-100 dark:hover:bg-volcanic-700 text-stone-700 dark:text-stone-300 font-medium px-4 py-2 rounded-lg transition-colors;
+  }
+
+  /* Hero Gradient Overlay */
+  .hero-gradient {
+    background: linear-gradient(
+      to top,
+      rgba(26, 77, 46, 0.95) 0%,
+      rgba(26, 77, 46, 0.85) 25%,
+      rgba(26, 77, 46, 0.6) 50%,
+      rgba(26, 77, 46, 0.3) 75%,
+      rgba(26, 77, 46, 0.15) 100%
+    );
+  }
+
+  .hero-gradient-dark {
+    background: linear-gradient(
+      to top,
+      rgba(9, 9, 11, 0.98) 0%,
+      rgba(9, 9, 11, 0.9) 25%,
+      rgba(9, 9, 11, 0.7) 50%,
+      rgba(9, 9, 11, 0.4) 75%,
+      rgba(9, 9, 11, 0.2) 100%
+    );
+  }
+
+  /* Header text shadow for transparent headers */
+  .header-text-shadow {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Image Aspect Ratios */
+  .aspect-hero {
+    aspect-ratio: 21/9;
+  }
+
+  .aspect-card {
+    aspect-ratio: 4/5;
+  }
+
+  .aspect-article {
+    aspect-ratio: 16/9;
+  }
+
+  /* Prose Customizations */
+  .prose-article {
+    @apply prose prose-stone dark:prose-invert max-w-none;
+  }
+
+  .prose-article img {
+    @apply rounded-xl shadow-lg;
+  }
+
+  .prose-article a {
+    @apply text-jungle-700 dark:text-amber-400 no-underline hover:underline;
+  }
+
+  /* Custom Scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--color-border)) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(var(--color-border));
+    border-radius: 3px;
+  }
+
+  /* Hide Scrollbar */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-jungle-600 to-reef-600;
+  }
+
+  .text-gradient-amber {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-amber-600;
+  }
+
+  /* Backdrop Blur Variants */
+  .glass {
+    @apply bg-white/80 dark:bg-volcanic-900/80 backdrop-blur-lg;
+  }
+
+  .glass-dark {
+    @apply bg-volcanic-900/80 backdrop-blur-lg;
+  }
+
+  /* Focus Ring */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-jungle-500/50 focus:ring-offset-2 focus:ring-offset-cream dark:focus:ring-offset-volcanic-900;
+  }
+
+  /* Animation Delays */
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+/* Font Loading */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_0ew.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/montserrat/v26/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Hw5aXo.woff2') format('woff2');
+}
