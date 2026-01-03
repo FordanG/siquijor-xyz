@@ -72,9 +72,14 @@ const websiteSchema = generateWebSiteSchema();
     </script>
   </head>
   <body class="min-h-screen flex flex-col bg-cream dark:bg-volcanic-900 text-stone-600 dark:text-stone-300 antialiased selection:bg-jungle-100 dark:selection:bg-jungle-900 selection:text-jungle-900 dark:selection:text-jungle-100">
+    <!-- Skip to main content link for keyboard users -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-jungle-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-jungle-400">
+      Skip to main content
+    </a>
+
     <Header transparent={transparentHeader} />
 
-    <main class="flex-1">
+    <main id="main-content" class="flex-1" tabindex="-1">
       <slot />
     </main>
 
