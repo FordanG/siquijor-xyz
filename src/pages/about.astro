@@ -1,0 +1,68 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/utils/constants';
+---
+
+<BaseLayout
+  title="About Us"
+  description="Learn about Siquijor.xyz - your comprehensive guide to authentic experiences on the mystical island of Siquijor, Philippines."
+>
+  <main class="py-24 lg:py-32">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+          About {SITE.name}
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+          Your trusted guide to authentic experiences on the mystical island of Siquijor
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-stone dark:prose-invert max-w-none">
+        <h2>Our Mission</h2>
+        <p>
+          Siquijor.xyz was created to help travelers discover the authentic magic of Siquijor Island.
+          Beyond the myths and mystery, we showcase the real experiences that make this island special:
+          from cliff jumping at Salagdoong to sunrise photography spots, traditional healing rituals to
+          hidden waterfalls.
+        </p>
+
+        <h2>Why Siquijor?</h2>
+        <p>
+          Often called the "Island of Fire" due to the bioluminescence once visible from the sea,
+          Siquijor has long been associated with mysticism and traditional healing. While these
+          elements remain part of the island's identity, there's so much more to discover:
+          pristine beaches, world-class diving, stunning landscapes, and some of the friendliest
+          locals in the Philippines.
+        </p>
+
+        <h2>What We Offer</h2>
+        <p>
+          Our guides are researched and written with actual travelers in mind. We provide:
+        </p>
+        <ul>
+          <li><strong>Adventure Guides</strong> - Detailed information on cliff jumping, diving, cave exploration, and more</li>
+          <li><strong>Photography Spots</strong> - GPS coordinates and timing tips for the best shots</li>
+          <li><strong>Planning Resources</strong> - Practical information on getting there, where to stay, and safety tips</li>
+          <li><strong>Local Life</strong> - Authentic cultural experiences including traditional healers and local cuisine</li>
+          <li><strong>Seasonal Guides</strong> - When to visit and what to expect throughout the year</li>
+        </ul>
+
+        <h2>Our Approach</h2>
+        <p>
+          We believe in sustainable tourism that benefits local communities. Our guides encourage
+          respectful travel practices, support for local businesses, and appreciation for Siquijor's
+          unique cultural heritage.
+        </p>
+
+        <h2>Contact Us</h2>
+        <p>
+          Have questions, suggestions, or feedback? We'd love to hear from you.
+          Visit our <a href="/contact">contact page</a> to get in touch.
+        </p>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
