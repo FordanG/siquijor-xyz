@@ -1,12 +1,20 @@
 ---
 interface Props {
   title?: string;
-  severity?: 'caution' | 'warning' | 'danger';
+  severity?: 'info' | 'caution' | 'warning' | 'danger';
 }
 
 const { title, severity = 'warning' } = Astro.props;
 
 const severityConfig = {
+  info: {
+    icon: 'info',
+    defaultTitle: 'Good to Know',
+    bg: 'bg-blue-50 dark:bg-blue-900/20',
+    border: 'border-blue-200 dark:border-blue-800',
+    icon_color: 'text-blue-600 dark:text-blue-400',
+    title_color: 'text-blue-800 dark:text-blue-300',
+  },
   caution: {
     icon: 'info',
     defaultTitle: 'Good to Know',

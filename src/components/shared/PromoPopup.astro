@@ -1,0 +1,190 @@
+---
+/**
+ * Promotional popup for Aninag Festival
+ * Shows randomly (20% chance) after a delay
+ * Remembers dismissal for 3 days
+ */
+---
+
+<!-- Promo Popup Overlay -->
+<div
+  id="promo-popup"
+  class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="promo-title"
+>
+  <!-- Backdrop -->
+  <div
+    id="promo-backdrop"
+    class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300"
+  ></div>
+
+  <!-- Popup Content -->
+  <div
+    id="promo-content"
+    class="relative w-full max-w-md transform scale-95 opacity-0 transition-all duration-300 ease-out"
+  >
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-jungle-600 to-jungle-800 shadow-2xl">
+      <!-- Close button -->
+      <button
+        id="promo-close"
+        type="button"
+        class="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+        aria-label="Close popup"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Decorative elements -->
+      <div class="absolute top-0 right-0 w-32 h-32 bg-amber-400/20 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-24 h-24 bg-amber-400/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+      <!-- Content -->
+      <div class="relative p-6 text-center">
+        <!-- Festival icon/emoji -->
+        <div class="mb-4 text-5xl">🎉</div>
+
+        <h3 id="promo-title" class="text-xl font-display font-bold text-white mb-2">
+          Aninag Festival 2025
+        </h3>
+
+        <p class="text-jungle-100 text-sm mb-5 leading-relaxed">
+          Experience Siquijor's vibrant celebration! Get your tickets now for an unforgettable cultural adventure.
+        </p>
+
+        <a
+          href="https://aninagfestival.helixpay.ph/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-6 py-3 bg-amber-400 hover:bg-amber-300 text-jungle-900 font-semibold rounded-full transition-colors shadow-lg hover:shadow-xl"
+        >
+          <span>Get Tickets</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+
+        <button
+          id="promo-dismiss"
+          type="button"
+          class="block w-full mt-4 text-xs text-jungle-200 hover:text-white transition-colors"
+        >
+          Maybe later
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const STORAGE_KEY = 'promo_dismissed';
+    const DISMISS_DAYS = 3; // Don't show for 3 days after dismissal
+    const SHOW_PROBABILITY = 0.2; // 20% chance to show
+    const SHOW_DELAY = 8000; // Show after 8 seconds
+
+    // Check if popup was recently dismissed
+    function wasRecentlyDismissed(): boolean {
+      const dismissedAt = localStorage.getItem(STORAGE_KEY);
+      if (!dismissedAt) return false;
+
+      const dismissedTime = parseInt(dismissedAt, 10);
+      const now = Date.now();
+      const daysSinceDismissed = (now - dismissedTime) / (1000 * 60 * 60 * 24);
+
+      return daysSinceDismissed < DISMISS_DAYS;
+    }
+
+    // Mark popup as dismissed
+    function markDismissed(): void {
+      localStorage.setItem(STORAGE_KEY, Date.now().toString());
+    }
+
+    // Show the popup with animation
+    function showPopup(): void {
+      const popup = document.getElementById('promo-popup');
+      const backdrop = document.getElementById('promo-backdrop');
+      const content = document.getElementById('promo-content');
+
+      if (!popup || !backdrop || !content) return;
+
+      popup.classList.remove('hidden');
+      popup.classList.add('flex');
+
+      // Trigger animation
+      requestAnimationFrame(() => {
+        backdrop.classList.remove('opacity-0');
+        backdrop.classList.add('opacity-100');
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+      });
+
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Hide the popup with animation
+    function hidePopup(): void {
+      const popup = document.getElementById('promo-popup');
+      const backdrop = document.getElementById('promo-backdrop');
+      const content = document.getElementById('promo-content');
+
+      if (!popup || !backdrop || !content) return;
+
+      backdrop.classList.remove('opacity-100');
+      backdrop.classList.add('opacity-0');
+      content.classList.remove('scale-100', 'opacity-100');
+      content.classList.add('scale-95', 'opacity-0');
+
+      // Hide after animation completes
+      setTimeout(() => {
+        popup.classList.add('hidden');
+        popup.classList.remove('flex');
+        document.body.style.overflow = '';
+      }, 300);
+
+      markDismissed();
+    }
+
+    // Initialize popup logic
+    function init(): void {
+      // Don't show if recently dismissed
+      if (wasRecentlyDismissed()) return;
+
+      // Random chance to show
+      if (Math.random() > SHOW_PROBABILITY) return;
+
+      // Show after delay
+      setTimeout(showPopup, SHOW_DELAY);
+
+      // Set up close handlers
+      const closeBtn = document.getElementById('promo-close');
+      const dismissBtn = document.getElementById('promo-dismiss');
+      const backdrop = document.getElementById('promo-backdrop');
+
+      closeBtn?.addEventListener('click', hidePopup);
+      dismissBtn?.addEventListener('click', hidePopup);
+      backdrop?.addEventListener('click', hidePopup);
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const popup = document.getElementById('promo-popup');
+          if (popup && !popup.classList.contains('hidden')) {
+            hidePopup();
+          }
+        }
+      });
+    }
+
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
