@@ -11,7 +11,15 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) =>
+        !page.includes('/privacy') &&
+        !page.includes('/terms') &&
+        !page.includes('/404'),
+      changefreq: 'weekly',
+      priority: 0.7,
+      customPages: ['https://siquijor.xyz/travel-guide'],
+    }),
   ],
   markdown: {
     shikiConfig: {

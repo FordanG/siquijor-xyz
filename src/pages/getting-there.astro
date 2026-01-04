@@ -1,7 +1,36 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import ProTip from '@/components/mdx/ProTip.astro';
 import Warning from '@/components/mdx/Warning.astro';
+import FAQ from '@/components/shared/FAQ.astro';
+
+const faqs = [
+  {
+    question: 'How do I get to Siquijor from Manila?',
+    answer: 'Fly from Manila to Dumaguete (1.5 hours via Cebu Pacific or Philippine Airlines), then take a ferry to Siquijor (45 minutes to 2 hours depending on the ferry). There are no direct flights to Siquijor as the island has no airport.',
+  },
+  {
+    question: 'How much is the ferry to Siquijor?',
+    answer: 'Ferry prices range from ₱130-400 from Dumaguete depending on the ferry company. OceanJet fast ferry costs ₱300-400 (45-60 min), while Montenegro Lines and GL Shipping slow ferries cost ₱130-200 (1.5-2 hours).',
+  },
+  {
+    question: 'Do I need to book ferries in advance?',
+    answer: 'No, you can usually buy tickets at the port on the day of travel. The only exception is during Holy Week (Easter) when ferries fill up quickly - book a few days ahead during that period.',
+  },
+  {
+    question: 'Which port should I arrive at in Siquijor?',
+    answer: 'Ferries arrive at either Siquijor Port (east coast) or Larena Port (north coast). Most tourists head to San Juan on the west coast - tricycle fare is ₱200-400 from either port.',
+  },
+  {
+    question: 'Can I bring a motorcycle on the ferry?',
+    answer: 'Yes, the slow ferries (Montenegro Lines, GL Shipping) accept motorcycles for an additional fee. OceanJet fast ferries do not allow vehicles. Most visitors rent motorcycles on the island instead.',
+  },
+  {
+    question: 'What time is the last ferry to Siquijor?',
+    answer: 'The last ferry from Dumaguete typically departs around 5-6 PM, but schedules vary. Morning ferries are more reliable. If arriving late, arrange accommodation pickup in advance as tricycle availability decreases after dark.',
+  },
+];
 ---
 
 <BaseLayout
@@ -10,6 +39,11 @@ import Warning from '@/components/mdx/Warning.astro';
 >
   <main class="py-24 lg:py-32">
     <div class="max-w-4xl mx-auto px-6">
+      <!-- Breadcrumbs -->
+      <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'Getting There' }]} />
+      </div>
+
       <!-- Header -->
       <div class="text-center mb-16">
         <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
@@ -175,6 +209,11 @@ import Warning from '@/components/mdx/Warning.astro';
           <li><strong>Heading to Bohol:</strong> Direct ferry from Larena</li>
           <li><strong>Going to Cebu:</strong> Via Dumaguete or Bohol</li>
         </ul>
+
+        <!-- FAQ Section -->
+        <div class="not-prose">
+          <FAQ faqs={faqs} title="Common Questions About Getting to Siquijor" />
+        </div>
 
         <div class="not-prose my-8">
           <div class="bg-jungle-50 dark:bg-jungle-900/20 rounded-2xl p-8 border border-jungle-200 dark:border-jungle-800">

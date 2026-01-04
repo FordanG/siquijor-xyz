@@ -44,6 +44,11 @@ const categoryInfo = CATEGORIES[category as keyof typeof CATEGORIES];
       src={image}
       alt={imageAlt}
       class="w-full h-full object-cover"
+      width="1920"
+      height="1080"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
     />
     <div class="absolute inset-0 hero-gradient dark:hero-gradient-dark"></div>
   </div>

@@ -1,0 +1,257 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import SchemaMarkup from '@/components/seo/SchemaMarkup.astro';
+import FAQ from '@/components/shared/FAQ.astro';
+import { generateFAQSchema } from '@/utils/schema';
+import { SITE } from '@/utils/constants';
+
+const faqs = [
+  {
+    question: 'How many days do you need in Siquijor?',
+    answer: 'Most travelers recommend 3-5 days to explore Siquijor comfortably. Three days allows you to see the major attractions like Cambugahay Falls, Salagdoong Beach, and the Balete Tree. Five days gives you time for day trips to Apo Island, exploring hidden waterfalls, and experiencing local culture.',
+  },
+  {
+    question: 'What is Siquijor known for?',
+    answer: 'Siquijor is known as the "Island of Fire" due to the bioluminescent fireflies that once lit up its shores. Today, it\'s famous for its pristine beaches, stunning waterfalls like Cambugahay Falls, traditional healers (mananambal), mystical folklore, and excellent cliff jumping spots at Salagdoong Beach.',
+  },
+  {
+    question: 'Is Siquijor worth visiting?',
+    answer: 'Absolutely! Siquijor is one of the Philippines\' best-kept secrets. It offers uncrowded beaches, affordable prices, authentic local experiences, and a mystical atmosphere you won\'t find elsewhere. It\'s perfect for adventure seekers, photographers, and those looking to escape tourist crowds.',
+  },
+  {
+    question: 'How do I get to Siquijor?',
+    answer: 'The most common route is flying to Dumaguete City and taking a ferry (1-1.5 hours). Ferries depart from Dumaguete and arrive at either Siquijor port or Larena port. You can also take a ferry from Bohol (Tagbilaran) or Cebu. There are no direct flights to Siquijor.',
+  },
+  {
+    question: 'What is the best time to visit Siquijor?',
+    answer: 'The best time to visit is during the dry season from November to May. March to May offers the best weather but can be hot. December to February is ideal with cooler temperatures and clear skies. Avoid September-October when typhoons are most likely.',
+  },
+  {
+    question: 'Is Siquijor safe for tourists?',
+    answer: 'Yes, Siquijor is one of the safest islands in the Philippines. Crime rates are very low, and locals are friendly and welcoming. The mystical reputation is part of cultural folklore. Standard travel precautions apply: watch your belongings, stay aware of your surroundings, and respect local customs.',
+  },
+];
+
+const faqSchema = generateFAQSchema({
+  url: new URL('/travel-guide', SITE.url).toString(),
+  faqs,
+});
+---
+
+<BaseLayout
+  title="Siquijor Travel Guide 2025 | Complete Island Guide"
+  description="Your complete Siquijor travel guide. Everything you need to know about beaches, waterfalls, how to get there, where to stay, and things to do on the Island of Fire."
+  keywords={['Siquijor travel guide', 'Siquijor island', 'things to do in Siquijor', 'Siquijor Philippines', 'Siquijor itinerary', 'Siquijor beaches']}
+>
+  <SchemaMarkup schema={faqSchema} />
+
+  <main class="py-24 lg:py-32">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Breadcrumbs -->
+      <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'Travel Guide' }]} />
+      </div>
+
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+          Siquijor Travel Guide
+        </h1>
+        <p class="text-xl text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+          Your complete guide to exploring the mystical Island of Fire. Discover beaches, waterfalls, and authentic experiences.
+        </p>
+      </div>
+
+      <!-- Quick Navigation -->
+      <nav class="bg-cream dark:bg-volcanic-800 rounded-2xl p-6 mb-12">
+        <h2 class="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-4">Quick Navigation</h2>
+        <ul class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+          <li><a href="#getting-there" class="text-jungle-700 dark:text-amber-400 hover:underline">Getting There</a></li>
+          <li><a href="#when-to-visit" class="text-jungle-700 dark:text-amber-400 hover:underline">When to Visit</a></li>
+          <li><a href="#where-to-stay" class="text-jungle-700 dark:text-amber-400 hover:underline">Where to Stay</a></li>
+          <li><a href="#things-to-do" class="text-jungle-700 dark:text-amber-400 hover:underline">Things to Do</a></li>
+          <li><a href="#itineraries" class="text-jungle-700 dark:text-amber-400 hover:underline">Itineraries</a></li>
+          <li><a href="#faqs" class="text-jungle-700 dark:text-amber-400 hover:underline">FAQs</a></li>
+        </ul>
+      </nav>
+
+      <!-- Content -->
+      <div class="prose prose-stone dark:prose-invert max-w-none prose-headings:font-display prose-a:text-jungle-700 dark:prose-a:text-amber-400">
+
+        <!-- Introduction -->
+        <section class="mb-12">
+          <p class="text-lg leading-relaxed">
+            Welcome to <strong>Siquijor</strong>, the mystical Island of Fire in the Central Visayas region of the Philippines.
+            Known for its pristine beaches, enchanting waterfalls, and rich folklore, Siquijor offers an authentic island
+            experience away from the tourist crowds.
+          </p>
+          <p>
+            Whether you're seeking adventure at cliff jumping spots, tranquility at hidden beaches, or a glimpse into
+            traditional healing practices, this comprehensive Siquijor travel guide has everything you need to plan your trip.
+          </p>
+        </section>
+
+        <!-- Getting There -->
+        <section id="getting-there" class="mb-12">
+          <h2>How to Get to Siquijor</h2>
+          <p>
+            Siquijor has no airport, so you'll need to take a ferry from nearby islands. The most common routes are:
+          </p>
+          <ul>
+            <li><strong>From Dumaguete</strong> - The most popular route. Fly to Dumaguete, then take a 1-1.5 hour ferry.</li>
+            <li><strong>From Bohol</strong> - Ferry from Tagbilaran takes about 2 hours.</li>
+            <li><strong>From Cebu</strong> - Longer route via Dumaguete or direct ferry (limited schedules).</li>
+          </ul>
+          <p>
+            <a href="/getting-there">Read our complete guide on getting to Siquijor →</a>
+          </p>
+          <p>
+            <a href="/articles/planning/how-to-get-to-siquijor">Detailed ferry schedules and tips →</a>
+          </p>
+        </section>
+
+        <!-- When to Visit -->
+        <section id="when-to-visit" class="mb-12">
+          <h2>Best Time to Visit Siquijor</h2>
+          <p>
+            The dry season from <strong>November to May</strong> is the best time to visit Siquijor. The weather is sunny,
+            seas are calm, and outdoor activities are at their best.
+          </p>
+          <ul>
+            <li><strong>Peak Season (Dec-Feb)</strong> - Cool, dry weather. Great for all activities.</li>
+            <li><strong>Hot Season (Mar-May)</strong> - Warmest months. Perfect for beach and water activities.</li>
+            <li><strong>Rainy Season (Jun-Oct)</strong> - Fewer tourists, lower prices, occasional storms.</li>
+          </ul>
+          <p>
+            <a href="/articles/seasonal/best-time-to-visit">Complete month-by-month weather guide →</a>
+          </p>
+        </section>
+
+        <!-- Where to Stay -->
+        <section id="where-to-stay" class="mb-12">
+          <h2>Where to Stay in Siquijor</h2>
+          <p>
+            Siquijor offers accommodations for every budget, from beachfront resorts to cozy guesthouses.
+            The main areas to stay are:
+          </p>
+          <ul>
+            <li><strong>San Juan</strong> - Most popular area with beach resorts and restaurants.</li>
+            <li><strong>Siquijor Town</strong> - Central location near the main port.</li>
+            <li><strong>Larena</strong> - Budget-friendly, near the northern port.</li>
+            <li><strong>Lazi</strong> - Quiet, authentic, close to Cambugahay Falls.</li>
+          </ul>
+          <p>
+            <a href="/articles/planning/where-to-stay-siquijor">Our complete accommodation guide →</a>
+          </p>
+          <p>
+            <a href="/articles/planning/siquijor-municipalities-guide">Explore all Siquijor municipalities →</a>
+          </p>
+        </section>
+
+        <!-- Things to Do -->
+        <section id="things-to-do" class="mb-12">
+          <h2>Things to Do in Siquijor</h2>
+
+          <h3>Beaches & Swimming</h3>
+          <ul>
+            <li><a href="/articles/adventure/paliton-beach-guide">Paliton Beach</a> - Siquijor's most beautiful beach</li>
+            <li><a href="/articles/adventure/tubod-marine-sanctuary-snorkeling">Tubod Marine Sanctuary</a> - Best snorkeling spot</li>
+            <li><a href="/articles/photography/kagusuan-beach-sunrise">Kagusuan Beach</a> - Perfect for sunrise</li>
+          </ul>
+
+          <h3>Waterfalls</h3>
+          <ul>
+            <li><a href="/articles/photography/cambugahay-falls-photography">Cambugahay Falls</a> - Iconic turquoise cascades</li>
+            <li><a href="/articles/adventure/lugnason-falls-zodiac-falls">Lugnason Falls</a> - Hidden gem with rope swings</li>
+            <li><a href="/articles/adventure/lagaan-falls">Lagaan Falls</a> - Off-the-beaten-path adventure</li>
+          </ul>
+
+          <h3>Adventure Activities</h3>
+          <ul>
+            <li><a href="/articles/adventure/cliff-jumping-salagdoong">Cliff Jumping at Salagdoong</a> - Iconic 10m and 15m platforms</li>
+            <li><a href="/articles/adventure/night-diving-siquijor">Night Diving</a> - Unique underwater experience</li>
+            <li><a href="/articles/adventure/cantabon-cave-spelunking">Cantabon Cave Spelunking</a> - Underground adventure</li>
+            <li><a href="/articles/adventure/mount-bandilaan-hiking">Mount Bandilaan Hiking</a> - Panoramic island views</li>
+            <li><a href="/articles/adventure/motorcycle-routes-island-loop">Motorcycle Island Loop</a> - Explore by scooter</li>
+          </ul>
+
+          <h3>Culture & Heritage</h3>
+          <ul>
+            <li><a href="/articles/local-life/traditional-healers-mananambal">Traditional Healers</a> - Meet the mananambal</li>
+            <li><a href="/articles/local-life/old-enchanted-balete-tree">Old Enchanted Balete Tree</a> - Mystical landmark</li>
+            <li><a href="/articles/local-life/lazi-church-convent">Lazi Church & Convent</a> - Historic heritage site</li>
+            <li><a href="/articles/local-life/artisan-workshops">Artisan Workshops</a> - Local crafts and traditions</li>
+          </ul>
+
+          <h3>Day Trips</h3>
+          <ul>
+            <li><a href="/articles/adventure/apo-island-day-trip">Apo Island Day Trip</a> - Swim with sea turtles</li>
+          </ul>
+
+          <p class="mt-6">
+            <a href="/experiences" class="font-semibold">Browse all Siquijor experiences →</a>
+          </p>
+        </section>
+
+        <!-- Itineraries -->
+        <section id="itineraries" class="mb-12">
+          <h2>Sample Itineraries</h2>
+          <p>
+            Not sure how to plan your days? Check out our carefully crafted itineraries:
+          </p>
+          <ul>
+            <li><a href="/articles/planning/siquijor-itinerary">3-Day Siquijor Itinerary</a> - Perfect for first-timers</li>
+            <li><a href="/articles/niche/couples-honeymoon-guide">Romantic Getaway Guide</a> - For couples</li>
+            <li><a href="/articles/planning/solo-travel-guide">Solo Travel Guide</a> - Tips for solo adventurers</li>
+            <li><a href="/articles/niche/digital-nomad-guide">Digital Nomad Guide</a> - Work remotely from paradise</li>
+          </ul>
+        </section>
+
+        <!-- Practical Tips -->
+        <section id="practical-tips" class="mb-12">
+          <h2>Practical Travel Tips</h2>
+          <ul>
+            <li><strong>Getting Around</strong> - Rent a motorcycle (P350-500/day) or hire a tricycle for tours.</li>
+            <li><strong>Money</strong> - Bring cash. ATMs are limited. Landbank in Siquijor Town is most reliable.</li>
+            <li><strong>Internet</strong> - Spotty in rural areas. Resorts and cafes in San Juan have WiFi.</li>
+            <li><strong>Safety</strong> - Very safe island. <a href="/articles/planning/safety-guide">Read our safety guide →</a></li>
+          </ul>
+        </section>
+
+        <!-- Compare with Other Islands -->
+        <section id="compare" class="mb-12">
+          <h2>Siquijor vs Other Islands</h2>
+          <p>Wondering how Siquijor compares to other Philippine destinations?</p>
+          <ul>
+            <li><a href="/articles/planning/siquijor-vs-bohol">Siquijor vs Bohol</a> - Which island is right for you?</li>
+            <li><a href="/articles/planning/siquijor-vs-apo-island">Siquijor vs Apo Island</a> - Adventure comparison</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- FAQs -->
+      <section id="faqs" class="mt-16">
+        <h2 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-stone-100 mb-8 font-display text-center">
+          Frequently Asked Questions
+        </h2>
+        <FAQ faqs={faqs} title="" generateSchema={false} />
+      </section>
+
+      <!-- CTA -->
+      <div class="mt-16 text-center">
+        <p class="text-lg text-stone-600 dark:text-stone-400 mb-6">
+          Ready to explore Siquijor? Start planning your adventure today.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/articles/planning/siquijor-itinerary" class="btn-primary">
+            View 3-Day Itinerary
+          </a>
+          <a href="/experiences" class="btn-secondary">
+            Browse Experiences
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

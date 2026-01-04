@@ -6,6 +6,7 @@ import type {
   BreadcrumbList,
   Organization,
   WebSite,
+  TravelAgency,
   WithContext
 } from 'schema-dts';
 import { SITE } from './constants';
@@ -48,6 +49,50 @@ export function generateWebSiteSchema(): WithContext<WebSite> {
       // @ts-ignore - schema-dts doesn't have query-input
       'query-input': 'required name=search_term_string',
     },
+  };
+}
+
+/**
+ * Generate TravelAgency schema for Siquijor travel guide
+ */
+export function generateTravelAgencySchema(): WithContext<TravelAgency> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TravelAgency',
+    name: SITE.name,
+    description: SITE.description,
+    url: SITE.url,
+    logo: `${SITE.url}/images/logo.png`,
+    image: `${SITE.url}/images/og-default.jpg`,
+    areaServed: {
+      '@type': 'Place',
+      name: 'Siquijor Island',
+      address: {
+        '@type': 'PostalAddress',
+        addressRegion: 'Siquijor',
+        addressCountry: 'PH',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 9.2,
+        longitude: 123.55,
+      },
+    },
+    sameAs: [
+      'https://instagram.com/siquijorxyz',
+      'https://facebook.com/siquijorxyz',
+      'https://tiktok.com/@siquijorxyz',
+    ],
+    // @ts-ignore - knowsAbout helps with topic relevance
+    knowsAbout: [
+      'Siquijor Island travel',
+      'Siquijor tourism',
+      'Philippines island tourism',
+      'Cambugahay Falls',
+      'Salagdoong Beach',
+      'Siquijor beaches',
+      'Siquijor waterfalls',
+    ],
   };
 }
 

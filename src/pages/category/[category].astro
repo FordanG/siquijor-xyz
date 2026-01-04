@@ -1,8 +1,98 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
 import ArticleCard from '@/components/articles/ArticleCard.astro';
+import FAQ from '@/components/shared/FAQ.astro';
 import { CATEGORIES } from '@/utils/constants';
+
+// Category-specific FAQs
+const CATEGORY_FAQS: Record<string, { question: string; answer: string }[]> = {
+  adventure: [
+    {
+      question: 'What adventure activities are available in Siquijor?',
+      answer: 'Siquijor offers cliff jumping at Salagdoong Beach, cave exploration at Cantabon Cave, waterfall trekking at Cambugahay and Lugnason Falls, snorkeling and diving at various sites, and the famous 72km island loop motorcycle ride.',
+    },
+    {
+      question: 'Is Siquijor safe for adventure activities?',
+      answer: 'Yes, Siquijor is generally safe for adventure activities. Most attractions have basic safety measures. However, always assess conditions yourself, avoid activities in bad weather, and consider hiring local guides for activities like cave exploration.',
+    },
+    {
+      question: 'What should I bring for adventure activities?',
+      answer: 'Bring water shoes or sandals with grip, quick-dry clothing, reef-safe sunscreen, a waterproof phone case, and a dry bag. For caves, bring a flashlight. For diving/snorkeling, most operators provide equipment.',
+    },
+  ],
+  photography: [
+    {
+      question: 'What are the best photography spots in Siquijor?',
+      answer: 'Top spots include Cambugahay Falls for waterfalls, Paliton Beach for sunsets, Salagdoong Beach for cliff jumping action shots, the 400-year-old Balete Tree, and San Isidro Labrador Church in Lazi for architecture.',
+    },
+    {
+      question: 'What time of day is best for photography in Siquijor?',
+      answer: 'Golden hour (6-7 AM and 5-6 PM) is ideal. For waterfalls, overcast days or early morning provide even lighting. Sunset spots like Paliton Beach are best around 5:30 PM. Avoid harsh midday sun for portraits.',
+    },
+    {
+      question: 'Can I use a drone in Siquijor?',
+      answer: 'Drone use is generally tolerated for personal use, but check local regulations. Avoid flying near churches, schools, and crowded areas. Some resorts may have restrictions. Always fly responsibly and respect privacy.',
+    },
+  ],
+  seasonal: [
+    {
+      question: 'When is the best time to visit Siquijor?',
+      answer: 'The best time is during dry season (December to May). Peak season is March-May with hot, sunny weather. December-February is slightly cooler. June-November is rainy season with occasional typhoons, but fewer tourists.',
+    },
+    {
+      question: 'What happens during Holy Week in Siquijor?',
+      answer: 'Holy Week (Semana Santa) is Siquijor\'s biggest event, featuring traditional healing rituals, potion-making at the Balete Tree, and religious processions. Book accommodations months in advance as the island fills up.',
+    },
+    {
+      question: 'Is Siquijor affected by typhoons?',
+      answer: 'Siquijor is occasionally affected by typhoons, mainly from June to November. The island is relatively sheltered, but ferries may be cancelled during severe weather. Monitor weather forecasts and have flexible travel dates.',
+    },
+  ],
+  'local-life': [
+    {
+      question: 'How can I experience authentic local culture in Siquijor?',
+      answer: 'Visit the local markets (especially Siquijor Town on Saturdays), attend a traditional healing session, explore the historic churches, join a local fiesta if timing aligns, and eat at local carinderias rather than tourist restaurants.',
+    },
+    {
+      question: 'What is a mananambal?',
+      answer: 'A mananambal is a traditional healer in Siquijor who practices folk medicine passed down through generations. They use herbs, prayers, and rituals for healing. Visits are cultural experiences and should be approached respectfully.',
+    },
+    {
+      question: 'What local food should I try in Siquijor?',
+      answer: 'Try fresh seafood (especially grilled fish), lechon on special occasions, local coconut dishes, kalamay (sticky rice cake), and fresh tropical fruits. The island is known for its pure honey and coconut wine (tuba).',
+    },
+  ],
+  planning: [
+    {
+      question: 'How many days do I need in Siquijor?',
+      answer: '3-5 days is ideal for most visitors. This allows time to circle the island, visit major attractions, and have relaxation time. A week is perfect for a slower pace. Minimum 2 days to see the highlights.',
+    },
+    {
+      question: 'How much does a Siquijor trip cost?',
+      answer: 'Budget travelers can spend ₱1,500-2,500/day including accommodation, food, and transport. Mid-range is ₱3,000-5,000/day. Most attractions are cheap (₱20-100 entrance fees). The biggest expenses are accommodation and motorcycle rental.',
+    },
+    {
+      question: 'Do I need to rent a motorcycle in Siquijor?',
+      answer: 'While not required, renting a motorcycle (₱350-500/day) is highly recommended. The island is small (72km loop) but attractions are spread out. Alternatives include hiring a tricycle for the day (₱1,500-2,000) or joining tours.',
+    },
+  ],
+  niche: [
+    {
+      question: 'Is Siquijor good for solo travelers?',
+      answer: 'Yes! Siquijor is one of the safest islands in the Philippines for solo travel. The small size makes it easy to navigate, locals are friendly, and the backpacker community is welcoming. Many hostels organize group activities.',
+    },
+    {
+      question: 'Can I work remotely from Siquijor?',
+      answer: 'Yes, but with caveats. WiFi quality varies - some cafes and resorts have reliable connections. Mobile data (Globe/Smart) works in most areas. Power outages occasionally happen. San Juan has the best infrastructure for remote work.',
+    },
+    {
+      question: 'Is Siquijor romantic for couples?',
+      answer: 'Absolutely! Siquijor offers intimate sunset beaches, secluded waterfalls, boutique resorts, and a laid-back atmosphere perfect for couples. Many choose it for honeymoons or romantic getaways away from crowded tourist spots.',
+    },
+  ],
+};
 
 export async function getStaticPaths() {
   const categories = Object.keys(CATEGORIES);
@@ -19,6 +109,7 @@ interface Props {
 
 const { category } = Astro.props;
 const categoryInfo = CATEGORIES[category as keyof typeof CATEGORIES];
+const categoryFaqs = CATEGORY_FAQS[category] || [];
 
 // Get articles for this category
 const articles = await getCollection(
@@ -33,28 +124,28 @@ const sortedArticles = articles.sort(
 ---
 
 <BaseLayout
-  title={`${categoryInfo.name} - Siquijor Experiences`}
-  description={categoryInfo.description}
+  title={`${categoryInfo.name} Siquijor | ${categoryInfo.seoTitle || categoryInfo.description}`}
+  description={categoryInfo.seoDescription || categoryInfo.description}
 >
   <!-- Header Section -->
   <section class="pt-32 pb-12 px-6 bg-jungle-700 dark:bg-volcanic-950">
     <div class="max-w-7xl mx-auto">
-      <a
-        href="/articles"
-        class="inline-flex items-center gap-2 text-jungle-200 hover:text-white mb-6 transition-colors"
-      >
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m12 19-7-7 7-7"></path>
-          <path d="M19 12H5"></path>
-        </svg>
-        All Articles
-      </a>
+      <!-- Breadcrumbs -->
+      <div class="mb-6">
+        <Breadcrumbs
+          variant="light"
+          items={[
+            { label: 'Articles', href: '/articles' },
+            { label: categoryInfo.name },
+          ]}
+        />
+      </div>
 
       <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 font-display">
         {categoryInfo.name}
       </h1>
       <p class="text-lg text-jungle-200 dark:text-volcanic-400 max-w-2xl">
-        {categoryInfo.description}
+        {categoryInfo.seoDescription || categoryInfo.description}
       </p>
     </div>
   </section>
@@ -120,6 +211,13 @@ const sortedArticles = articles.sort(
               <path d="m12 5 7 7-7 7"></path>
             </svg>
           </a>
+        </div>
+      )}
+
+      {/* Category FAQ Section */}
+      {categoryFaqs.length > 0 && (
+        <div class="mt-16">
+          <FAQ faqs={categoryFaqs} title={`${categoryInfo.name} FAQs`} />
         </div>
       )}
     </div>

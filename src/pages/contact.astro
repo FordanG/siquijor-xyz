@@ -1,6 +1,23 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import FAQ from '@/components/shared/FAQ.astro';
 import { SITE } from '@/utils/constants';
+
+const faqs = [
+  {
+    question: 'Can you help me plan my trip?',
+    answer: 'While we don\'t offer personalized trip planning services, our comprehensive guides cover everything you need to know. Check out our Solo Travel Guide and Best Time to Visit articles for detailed information.',
+  },
+  {
+    question: 'Is the information on your site accurate?',
+    answer: 'We strive to keep all information current and accurate. Prices, schedules, and conditions can change, so we recommend verifying details before your trip. If you notice any outdated information, please let us know.',
+  },
+  {
+    question: 'Do you accept guest posts?',
+    answer: 'We occasionally accept high-quality guest contributions from travelers who have visited Siquijor. Please reach out via email with your idea before submitting.',
+  },
+];
 ---
 
 <BaseLayout
@@ -9,6 +26,11 @@ import { SITE } from '@/utils/constants';
 >
   <main class="py-24 lg:py-32">
     <div class="max-w-4xl mx-auto px-6">
+      <!-- Breadcrumbs -->
+      <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'Contact' }]} />
+      </div>
+
       <!-- Header -->
       <div class="text-center mb-16">
         <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
@@ -58,45 +80,8 @@ import { SITE } from '@/utils/constants';
         </div>
       </div>
 
-      <!-- FAQ -->
-      <div class="bg-stone-50 dark:bg-volcanic-900 rounded-2xl p-8">
-        <h2 class="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-6">Frequently Asked Questions</h2>
-
-        <div class="space-y-6">
-          <div>
-            <h3 class="font-semibold text-stone-900 dark:text-stone-100 mb-2">
-              Can you help me plan my trip?
-            </h3>
-            <p class="text-stone-600 dark:text-stone-400">
-              While we don't offer personalized trip planning services, our comprehensive guides
-              cover everything you need to know. Check out our
-              <a href="/articles/planning/solo-travel-guide" class="text-jungle-600 dark:text-amber-400 hover:underline">Solo Travel Guide</a>
-              and <a href="/articles/seasonal/best-time-to-visit" class="text-jungle-600 dark:text-amber-400 hover:underline">Best Time to Visit</a> articles.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="font-semibold text-stone-900 dark:text-stone-100 mb-2">
-              Is the information on your site accurate?
-            </h3>
-            <p class="text-stone-600 dark:text-stone-400">
-              We strive to keep all information current and accurate. Prices, schedules, and
-              conditions can change, so we recommend verifying details before your trip.
-              If you notice any outdated information, please let us know.
-            </p>
-          </div>
-
-          <div>
-            <h3 class="font-semibold text-stone-900 dark:text-stone-100 mb-2">
-              Do you accept guest posts?
-            </h3>
-            <p class="text-stone-600 dark:text-stone-400">
-              We occasionally accept high-quality guest contributions from travelers who have
-              visited Siquijor. Please reach out via email with your idea before submitting.
-            </p>
-          </div>
-        </div>
-      </div>
+      <!-- FAQ with Schema -->
+      <FAQ faqs={faqs} />
     </div>
   </main>
 </BaseLayout>

@@ -5,7 +5,7 @@ import Footer from '@/components/layout/Footer.astro';
 import SEOHead from '@/components/seo/SEOHead.astro';
 import SchemaMarkup from '@/components/seo/SchemaMarkup.astro';
 import PromoPopup from '@/components/shared/PromoPopup.astro';
-import { generateOrganizationSchema, generateWebSiteSchema } from '@/utils/schema';
+import { generateOrganizationSchema, generateWebSiteSchema, generateTravelAgencySchema } from '@/utils/schema';
 
 interface Props {
   title: string;
@@ -37,6 +37,7 @@ const {
 
 const organizationSchema = generateOrganizationSchema();
 const websiteSchema = generateWebSiteSchema();
+const travelAgencySchema = generateTravelAgencySchema();
 ---
 
 <!doctype html>
@@ -68,7 +69,7 @@ const websiteSchema = generateWebSiteSchema();
       author={author}
     />
 
-    <SchemaMarkup schema={[organizationSchema, websiteSchema]} />
+    <SchemaMarkup schema={[organizationSchema, websiteSchema, travelAgencySchema]} />
 
     <!-- Prevent FOUC for dark mode -->
     <script is:inline>
