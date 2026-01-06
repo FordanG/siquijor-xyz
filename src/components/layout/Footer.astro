@@ -1,0 +1,108 @@
+---
+import { SITE, FOOTER_LINKS } from '@/utils/constants';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-jungle-700 dark:bg-volcanic-950 text-white">
+  <!-- Main Footer -->
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+      <!-- Brand Column -->
+      <div class="lg:col-span-2">
+        <a href="/" class="flex items-center gap-2 mb-6">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="w-6 h-6 text-amber-400"
+          >
+            <path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4" />
+            <path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3" />
+            <path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35" />
+            <path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14" />
+          </svg>
+          <span class="text-xl font-bold tracking-tight">{SITE.name}</span>
+        </a>
+        <p class="text-jungle-200 dark:text-volcanic-400 text-sm leading-relaxed max-w-sm">
+          Your guide to authentic Siquijor experiences. From cliff jumping adventures to traditional healing rituals, discover the mystical island beyond the ordinary.
+        </p>
+      </div>
+
+      <!-- Experiences Column -->
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-amber-400 mb-4">
+          Experiences
+        </h4>
+        <ul class="space-y-3">
+          {FOOTER_LINKS.experiences.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-jungle-200 dark:text-volcanic-400 hover:text-white transition-colors text-sm"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Planning Column -->
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-amber-400 mb-4">
+          Planning
+        </h4>
+        <ul class="space-y-3">
+          {FOOTER_LINKS.planning.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-jungle-200 dark:text-volcanic-400 hover:text-white transition-colors text-sm"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- About Column -->
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-amber-400 mb-4">
+          About
+        </h4>
+        <ul class="space-y-3">
+          {FOOTER_LINKS.about.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="text-jungle-200 dark:text-volcanic-400 hover:text-white transition-colors text-sm"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t border-jungle-600 dark:border-volcanic-800">
+    <div class="max-w-7xl mx-auto px-6 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-jungle-300 dark:text-volcanic-500">
+          &copy; {currentYear} {SITE.name}. All rights reserved.
+        </p>
+        <p class="text-xs text-jungle-400 dark:text-volcanic-600">
+          Made with love for Siquijor Island, Philippines
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

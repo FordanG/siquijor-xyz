@@ -1,0 +1,321 @@
+---
+import { NAV_LINKS, SITE } from '@/utils/constants';
+
+interface Props {
+  transparent?: boolean;
+}
+
+const { transparent = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  id="header"
+  class:list={[
+    'fixed top-0 w-full z-50 transition-all duration-300',
+    transparent ? 'bg-transparent' : 'glass border-b border-stone-200/50 dark:border-volcanic-700/50',
+  ]}
+  data-transparent={transparent}
+>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex h-16 md:h-20 items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class:list={["flex items-center gap-2 group", transparent && "header-text-shadow"]} aria-label={`${SITE.name} - Go to homepage`}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class:list={[
+            "w-6 h-6 group-hover:-rotate-12 transition-transform duration-500",
+            transparent ? "text-white" : "text-jungle-600 dark:text-jungle-400"
+          ]}
+          aria-hidden="true"
+        >
+          <path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4" />
+          <path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3" />
+          <path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35" />
+          <path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14" />
+        </svg>
+        <span class:list={[
+          "text-lg font-bold tracking-tight",
+          transparent ? "text-white" : "text-stone-900 dark:text-stone-100"
+        ]}>
+          {SITE.name}
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class:list={["hidden md:flex items-center gap-8", transparent && "header-text-shadow"]} aria-label="Main navigation">
+        {NAV_LINKS.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm font-medium transition-colors',
+              transparent
+                ? (currentPath.startsWith(link.href)
+                    ? 'text-white font-semibold'
+                    : 'text-white/90 hover:text-white')
+                : (currentPath.startsWith(link.href)
+                    ? 'text-jungle-700 dark:text-amber-400'
+                    : 'text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100'),
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Actions -->
+      <div class:list={["flex items-center gap-3", transparent && "header-text-shadow"]}>
+        <!-- Dark Mode Toggle -->
+        <button
+          id="theme-toggle"
+          type="button"
+          class:list={[
+            "p-2 rounded-lg transition-colors",
+            transparent
+              ? "text-white/90 hover:text-white hover:bg-white/10"
+              : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-volcanic-700"
+          ]}
+          aria-label="Toggle dark mode"
+        >
+          <!-- Sun icon (shown in dark mode) -->
+          <svg
+            class="hidden dark:block w-5 h-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <!-- Moon icon (shown in light mode) -->
+          <svg
+            class="block dark:hidden w-5 h-5"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+
+        <!-- CTA Button (Desktop) -->
+        <a
+          href="/experiences"
+          class="hidden md:inline-flex btn-primary text-sm"
+        >
+          Find Experiences
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button
+          id="mobile-menu-toggle"
+          type="button"
+          class:list={[
+            "md:hidden p-2 rounded-lg transition-colors",
+            transparent
+              ? "text-white/90 hover:text-white hover:bg-white/10"
+              : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-volcanic-700"
+          ]}
+          aria-label="Open menu"
+          aria-expanded="false"
+        >
+          <svg
+            class="w-6 h-6"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="6" y2="6"></line>
+            <line x1="4" x2="20" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-50 hidden"
+  aria-hidden="true"
+>
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" id="mobile-menu-backdrop"></div>
+
+  <!-- Menu Panel -->
+  <div class="absolute right-0 top-0 h-full w-80 max-w-[90vw] bg-cream dark:bg-volcanic-900 shadow-2xl transform translate-x-full transition-transform duration-300" id="mobile-menu-panel">
+    <div class="flex flex-col h-full">
+      <!-- Header -->
+      <div class="flex items-center justify-between p-6 border-b border-stone-200 dark:border-volcanic-700">
+        <span class="text-lg font-bold text-stone-900 dark:text-stone-100">Menu</span>
+        <button
+          id="mobile-menu-close"
+          type="button"
+          class="p-2 rounded-lg text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-volcanic-700 transition-colors"
+          aria-label="Close menu"
+        >
+          <svg
+            class="w-6 h-6"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 overflow-y-auto p-6">
+        <ul class="space-y-2">
+          {NAV_LINKS.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class:list={[
+                  'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
+                  currentPath.startsWith(link.href)
+                    ? 'bg-jungle-100 dark:bg-jungle-900/30 text-jungle-700 dark:text-jungle-300'
+                    : 'text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-volcanic-700',
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <!-- Footer -->
+      <div class="p-6 border-t border-stone-200 dark:border-volcanic-700">
+        <a href="/experiences" class="btn-primary w-full text-center block">
+          Find Experiences
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dark mode toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const html = document.documentElement;
+
+  // Check saved preference or system preference on load
+  if (localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) &&
+       window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    html.classList.add('dark');
+  } else {
+    html.classList.remove('dark');
+  }
+
+  themeToggle?.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+  });
+
+  // Mobile menu
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+
+  function openMobileMenu() {
+    mobileMenu?.classList.remove('hidden');
+    setTimeout(() => {
+      mobileMenuPanel?.classList.remove('translate-x-full');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    mobileMenuPanel?.classList.add('translate-x-full');
+    setTimeout(() => {
+      mobileMenu?.classList.add('hidden');
+    }, 300);
+    document.body.style.overflow = '';
+  }
+
+  mobileMenuToggle?.addEventListener('click', openMobileMenu);
+  mobileMenuClose?.addEventListener('click', closeMobileMenu);
+  mobileMenuBackdrop?.addEventListener('click', closeMobileMenu);
+
+  // Header scroll behavior for transparent headers
+  const header = document.getElementById('header');
+  const isTransparent = header?.dataset.transparent === 'true';
+
+  if (isTransparent) {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        header?.classList.remove('bg-transparent');
+        header?.classList.add('glass', 'border-b', 'border-stone-200/50', 'dark:border-volcanic-700/50', 'header-scrolled');
+      } else {
+        header?.classList.add('bg-transparent');
+        header?.classList.remove('glass', 'border-b', 'border-stone-200/50', 'dark:border-volcanic-700/50', 'header-scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+  }
+</script>
+
+<style>
+  /* When header is scrolled, revert to normal colors */
+  :global(.header-scrolled) .header-text-shadow {
+    text-shadow: none;
+  }
+
+  :global(.header-scrolled) a[class*="text-white"],
+  :global(.header-scrolled) span[class*="text-white"],
+  :global(.header-scrolled) button[class*="text-white"] {
+    --tw-text-opacity: 1;
+    color: rgb(87 83 78 / var(--tw-text-opacity));
+  }
+
+  :global(.dark .header-scrolled) a[class*="text-white"],
+  :global(.dark .header-scrolled) span[class*="text-white"],
+  :global(.dark .header-scrolled) button[class*="text-white"] {
+    --tw-text-opacity: 1;
+    color: rgb(161 161 170 / var(--tw-text-opacity));
+  }
+
+  :global(.header-scrolled) svg[class*="text-white"] {
+    --tw-text-opacity: 1;
+    color: rgb(22 101 52 / var(--tw-text-opacity));
+  }
+
+  :global(.dark .header-scrolled) svg[class*="text-white"] {
+    --tw-text-opacity: 1;
+    color: rgb(134 239 172 / var(--tw-text-opacity));
+  }
+</style>

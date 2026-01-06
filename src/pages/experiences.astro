@@ -1,0 +1,217 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import ArticleCard from '@/components/articles/ArticleCard.astro';
+import FAQ from '@/components/shared/FAQ.astro';
+import { getCollection } from 'astro:content';
+import { CATEGORIES } from '@/utils/constants';
+
+const faqs = [
+  {
+    question: 'What are the must-do experiences in Siquijor?',
+    answer: 'The top experiences include cliff jumping at Salagdoong Beach, swimming at Cambugahay Falls, exploring Cantabon Cave, watching sunset at Paliton Beach, and visiting a traditional healer (mananambal). Each offers a unique glimpse into the island\'s natural beauty and culture.',
+  },
+  {
+    question: 'Is cliff jumping at Salagdoong Beach safe?',
+    answer: 'Yes, when done responsibly. There are two platforms: 25 feet (beginner-friendly) and 35 feet (more advanced). The water is deep and clear. Avoid jumping during rough weather, don\'t attempt after drinking alcohol, and always check the water conditions first.',
+  },
+  {
+    question: 'Do I need a guide for Cambugahay Falls?',
+    answer: 'No guide is required - the falls are easily accessible with clear paths. However, hiring a local guide (₱200-300) can enhance your experience with insider knowledge about the best spots and rope swings.',
+  },
+  {
+    question: 'Are the traditional healers real?',
+    answer: 'The mananambal are genuine practitioners of traditional Filipino healing arts passed down through generations. While experiences vary, most visitors find the cultural encounter meaningful regardless of personal beliefs. Approach with respect and an open mind.',
+  },
+  {
+    question: 'What\'s the best way to explore the island?',
+    answer: 'Renting a motorcycle (₱350-500/day) is the most popular and practical way to explore. The island loop is only 72km, making it easy to visit multiple attractions in one day. Tricycles are available for those who don\'t ride motorcycles.',
+  },
+];
+
+// Get all articles, sorted by date
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const sortedArticles = allArticles.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+// Get featured articles
+const featuredArticles = sortedArticles.filter(article => article.data.featured).slice(0, 3);
+
+// Get articles by category
+const adventureArticles = sortedArticles.filter(a => a.data.category === 'adventure').slice(0, 4);
+const photographyArticles = sortedArticles.filter(a => a.data.category === 'photography').slice(0, 4);
+const localLifeArticles = sortedArticles.filter(a => a.data.category === 'local-life').slice(0, 4);
+---
+
+<BaseLayout
+  title="Experiences"
+  description="Discover authentic Siquijor experiences - from cliff jumping adventures to traditional healing rituals, photography spots to local cuisine."
+>
+  <main class="py-24 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Breadcrumbs -->
+      <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'Experiences' }]} />
+      </div>
+
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+          Siquijor Experiences
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+          Discover the authentic magic of Siquijor through immersive adventures, cultural encounters, and natural wonders
+        </p>
+      </div>
+
+      <!-- Category Cards -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+        {Object.entries(CATEGORIES).map(([slug, category]) => (
+          <a
+            href={`/category/${slug}`}
+            class="group bg-white dark:bg-volcanic-800 rounded-2xl p-8 border border-stone-200 dark:border-volcanic-700 hover:border-jungle-300 dark:hover:border-jungle-600 transition-all hover:shadow-lg"
+          >
+            <h3 class="text-xl font-bold text-stone-900 dark:text-stone-100 mb-2 group-hover:text-jungle-600 dark:group-hover:text-amber-400 transition-colors">
+              {category.name}
+            </h3>
+            <p class="text-stone-600 dark:text-stone-400 text-sm">
+              {category.description}
+            </p>
+          </a>
+        ))}
+      </div>
+
+      <!-- Featured Experiences -->
+      {featuredArticles.length > 0 && (
+        <section class="mb-20">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-stone-100 font-display">
+              Featured Experiences
+            </h2>
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredArticles.map((article) => (
+              <ArticleCard
+                title={article.data.title}
+                description={article.data.description}
+                href={`/articles/${article.slug}`}
+                image={article.data.heroImage.src}
+                imageAlt={article.data.heroImage.alt}
+                category={article.data.category}
+                publishDate={article.data.publishDate}
+                difficulty={article.data.difficulty}
+                duration={article.data.duration}
+                featured={true}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Adventure Section -->
+      <section class="mb-20">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-stone-100 font-display">
+            Adventure
+          </h2>
+          <a href="/category/adventure" class="text-jungle-600 dark:text-amber-400 font-medium hover:underline">
+            View all
+          </a>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {adventureArticles.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              href={`/articles/${article.slug}`}
+              image={article.data.heroImage.src}
+              imageAlt={article.data.heroImage.alt}
+              category={article.data.category}
+              publishDate={article.data.publishDate}
+              difficulty={article.data.difficulty}
+              duration={article.data.duration}
+            />
+          ))}
+        </div>
+      </section>
+
+      <!-- Photography Section -->
+      <section class="mb-20">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-stone-100 font-display">
+            Photography
+          </h2>
+          <a href="/category/photography" class="text-jungle-600 dark:text-amber-400 font-medium hover:underline">
+            View all
+          </a>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {photographyArticles.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              href={`/articles/${article.slug}`}
+              image={article.data.heroImage.src}
+              imageAlt={article.data.heroImage.alt}
+              category={article.data.category}
+              publishDate={article.data.publishDate}
+              difficulty={article.data.difficulty}
+              duration={article.data.duration}
+            />
+          ))}
+        </div>
+      </section>
+
+      <!-- Local Life Section -->
+      <section class="mb-20">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl md:text-3xl font-bold text-stone-900 dark:text-stone-100 font-display">
+            Local Life
+          </h2>
+          <a href="/category/local-life" class="text-jungle-600 dark:text-amber-400 font-medium hover:underline">
+            View all
+          </a>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {localLifeArticles.map((article) => (
+            <ArticleCard
+              title={article.data.title}
+              description={article.data.description}
+              href={`/articles/${article.slug}`}
+              image={article.data.heroImage.src}
+              imageAlt={article.data.heroImage.alt}
+              category={article.data.category}
+              publishDate={article.data.publishDate}
+              difficulty={article.data.difficulty}
+              duration={article.data.duration}
+            />
+          ))}
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section class="mb-20">
+        <FAQ faqs={faqs} title="Common Questions About Siquijor Experiences" />
+      </section>
+
+      <!-- CTA Section -->
+      <section class="bg-jungle-700 dark:bg-volcanic-800 rounded-3xl p-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 font-display">
+          Planning Your Trip?
+        </h2>
+        <p class="text-jungle-100 dark:text-volcanic-300 mb-8 max-w-2xl mx-auto">
+          Check our practical guides for everything you need to know about visiting Siquijor
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/getting-there" class="btn-secondary">
+            Getting There
+          </a>
+          <a href="/articles/seasonal/best-time-to-visit" class="btn-ghost text-white border border-white/20 hover:bg-white/10">
+            Best Time to Visit
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

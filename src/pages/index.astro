@@ -1,0 +1,20 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/home/Hero.astro';
+import ExperienceGrid from '@/components/home/ExperienceGrid.astro';
+import FeaturedExperiences from '@/components/home/FeaturedExperiences.astro';
+import QuickLinks from '@/components/home/QuickLinks.astro';
+import Newsletter from '@/components/home/Newsletter.astro';
+---
+
+<BaseLayout
+  title="Siquijor Travel Guide 2025 | Beaches, Waterfalls & Adventures"
+  description="Your complete Siquijor travel guide. Discover the best beaches, waterfalls, cliff jumping spots, and hidden gems on the mystical Island of Fire in the Philippines."
+  transparentHeader={true}
+>
+  <Hero />
+  <ExperienceGrid />
+  <FeaturedExperiences />
+  <QuickLinks />
+  <Newsletter />
+</BaseLayout>

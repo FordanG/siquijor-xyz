@@ -1,0 +1,16 @@
+---
+import { serializeSchema } from '@/utils/schema';
+
+interface Props {
+  schema: object | object[];
+}
+
+const { schema } = Astro.props;
+
+// Handle array of schemas or single schema
+const schemas = Array.isArray(schema) ? schema : [schema];
+---
+
+{schemas.map((s) => (
+  <script type="application/ld+json" set:html={serializeSchema(s)} />
+))}

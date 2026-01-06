@@ -1,0 +1,87 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import FAQ from '@/components/shared/FAQ.astro';
+import { SITE } from '@/utils/constants';
+
+const faqs = [
+  {
+    question: 'Can you help me plan my trip?',
+    answer: 'While we don\'t offer personalized trip planning services, our comprehensive guides cover everything you need to know. Check out our Solo Travel Guide and Best Time to Visit articles for detailed information.',
+  },
+  {
+    question: 'Is the information on your site accurate?',
+    answer: 'We strive to keep all information current and accurate. Prices, schedules, and conditions can change, so we recommend verifying details before your trip. If you notice any outdated information, please let us know.',
+  },
+  {
+    question: 'Do you accept guest posts?',
+    answer: 'We occasionally accept high-quality guest contributions from travelers who have visited Siquijor. Please reach out via email with your idea before submitting.',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact Us"
+  description="Get in touch with the Siquijor.xyz team. We welcome your questions, feedback, and suggestions."
+>
+  <main class="py-24 lg:py-32">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Breadcrumbs -->
+      <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'Contact' }]} />
+      </div>
+
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+          Contact Us
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+          Have questions about Siquijor? We'd love to hear from you.
+        </p>
+      </div>
+
+      <!-- Contact Options -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <!-- Email -->
+        <div class="bg-white dark:bg-volcanic-800 rounded-2xl p-8 border border-stone-200 dark:border-volcanic-700">
+          <div class="w-12 h-12 bg-jungle-100 dark:bg-jungle-900/30 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-jungle-600 dark:text-jungle-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2"/>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2">Email</h3>
+          <p class="text-stone-600 dark:text-stone-400 mb-4">
+            For general inquiries and feedback
+          </p>
+          <a href="mailto:hello@siquijor.xyz" class="text-jungle-600 dark:text-amber-400 font-medium hover:underline">
+            hello@siquijor.xyz
+          </a>
+        </div>
+
+        <!-- Partnerships -->
+        <div class="bg-white dark:bg-volcanic-800 rounded-2xl p-8 border border-stone-200 dark:border-volcanic-700">
+          <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2">Partnerships</h3>
+          <p class="text-stone-600 dark:text-stone-400 mb-4">
+            For business and collaboration inquiries
+          </p>
+          <a href="mailto:partnerships@siquijor.xyz" class="text-jungle-600 dark:text-amber-400 font-medium hover:underline">
+            partnerships@siquijor.xyz
+          </a>
+        </div>
+      </div>
+
+      <!-- FAQ with Schema -->
+      <FAQ faqs={faqs} />
+    </div>
+  </main>
+</BaseLayout>

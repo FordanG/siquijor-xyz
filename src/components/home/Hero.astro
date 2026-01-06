@@ -1,0 +1,65 @@
+---
+import { getSeasonLabel } from '@/utils/helpers';
+
+const seasonLabel = getSeasonLabel();
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img
+      src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?q=80&w=2070&auto=format&fit=crop"
+      alt="Dramatic cliff jumping at Salagdoong Beach, Siquijor"
+      class="w-full h-full object-cover"
+      width="2070"
+      height="1380"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <div class="absolute inset-0 hero-gradient dark:hero-gradient-dark"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 py-32 text-center">
+    <!-- Season Badge -->
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8">
+      <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse-slow"></span>
+      <span class="text-sm font-medium text-white tracking-wide">
+        {seasonLabel}
+      </span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight font-display">
+      Your Siquijor
+      <br class="hidden md:block" />
+      <span class="text-gradient-amber">Travel Guide</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-10">
+      Discover the best beaches, waterfalls, and adventures on the Island of Fire. Your complete guide to Siquijor's hidden gems and authentic experiences.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="/experiences" class="btn-secondary text-base">
+        Find Your Adventure
+      </a>
+      <a href="/category/photography" class="btn-ghost bg-white/10 text-white border border-white/20 hover:bg-white/20">
+        Photo Spots
+      </a>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
+      <div class="flex flex-col items-center gap-2 text-white/60">
+        <span class="text-xs tracking-wider uppercase">Explore</span>
+        <svg class="w-5 h-5 animate-bounce" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

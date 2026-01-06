@@ -1,0 +1,58 @@
+---
+import { generateFAQSchema } from '@/utils/schema';
+import SchemaMarkup from '@/components/seo/SchemaMarkup.astro';
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faqs: FAQItem[];
+  title?: string;
+  generateSchema?: boolean;
+}
+
+const { faqs, title = 'Frequently Asked Questions', generateSchema = true } = Astro.props;
+
+const currentUrl = Astro.url.href;
+---
+
+<section class="my-12">
+  <h2 class="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+    {title}
+  </h2>
+
+  <div class="space-y-4">
+    {faqs.map((faq, index) => (
+      <details
+        class="group bg-white dark:bg-volcanic-800 rounded-xl border border-stone-200 dark:border-volcanic-700 overflow-hidden"
+      >
+        <summary class="flex items-center justify-between p-4 cursor-pointer list-none hover:bg-stone-50 dark:hover:bg-volcanic-700/50 transition-colors">
+          <span class="font-medium text-stone-900 dark:text-stone-100 pr-4">
+            {faq.question}
+          </span>
+          <svg
+            class="w-5 h-5 text-stone-400 group-open:rotate-180 transition-transform flex-shrink-0"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </summary>
+        <div class="px-4 pb-4 text-stone-600 dark:text-volcanic-400">
+          {faq.answer}
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+{generateSchema && (
+  <SchemaMarkup schema={generateFAQSchema({ url: currentUrl, faqs })} />
+)}

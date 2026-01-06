@@ -1,0 +1,70 @@
+---
+import { DIFFICULTY_LEVELS } from '@/utils/constants';
+import { getDifficultyColor } from '@/utils/helpers';
+
+interface Props {
+  difficulty: 'easy' | 'moderate' | 'challenging' | 'expert';
+  showDescription?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { difficulty, showDescription = true, size = 'md' } = Astro.props;
+
+const level = DIFFICULTY_LEVELS[difficulty];
+const levels = Object.keys(DIFFICULTY_LEVELS) as Array<keyof typeof DIFFICULTY_LEVELS>;
+const currentIndex = levels.indexOf(difficulty);
+
+const sizeClasses = {
+  sm: 'text-xs',
+  md: 'text-sm',
+  lg: 'text-base',
+};
+
+const dotSizes = {
+  sm: 'w-2 h-2',
+  md: 'w-3 h-3',
+  lg: 'w-4 h-4',
+};
+---
+
+<div class="flex flex-col gap-2">
+  <div class="flex items-center gap-3">
+    <!-- Difficulty Dots -->
+    <div class="flex items-center gap-1">
+      {levels.map((_, index) => (
+        <span
+          class:list={[
+            'rounded-full transition-colors',
+            dotSizes[size],
+            index <= currentIndex
+              ? difficulty === 'easy'
+                ? 'bg-green-500'
+                : difficulty === 'moderate'
+                  ? 'bg-amber-500'
+                  : difficulty === 'challenging'
+                    ? 'bg-orange-500'
+                    : 'bg-red-500'
+              : 'bg-stone-200 dark:bg-volcanic-600',
+          ]}
+        />
+      ))}
+    </div>
+
+    <!-- Label -->
+    <span class:list={[
+      'font-medium',
+      sizeClasses[size],
+      getDifficultyColor(difficulty),
+      'px-2 py-0.5 rounded',
+    ]}>
+      {level.label}
+    </span>
+  </div>
+
+  <!-- Description -->
+  {showDescription && (
+    <p class="text-stone-500 dark:text-volcanic-400 text-sm">
+      {level.description}
+    </p>
+  )}
+</div>

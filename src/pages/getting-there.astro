@@ -1,0 +1,233 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import ProTip from '@/components/mdx/ProTip.astro';
+import Warning from '@/components/mdx/Warning.astro';
+import FAQ from '@/components/shared/FAQ.astro';
+
+const faqs = [
+  {
+    question: 'How do I get to Siquijor from Manila?',
+    answer: 'Fly from Manila to Dumaguete (1.5 hours via Cebu Pacific or Philippine Airlines), then take a ferry to Siquijor (45 minutes to 2 hours depending on the ferry). There are no direct flights to Siquijor as the island has no airport.',
+  },
+  {
+    question: 'How much is the ferry to Siquijor?',
+    answer: 'Ferry prices range from ₱130-400 from Dumaguete depending on the ferry company. OceanJet fast ferry costs ₱300-400 (45-60 min), while Montenegro Lines and GL Shipping slow ferries cost ₱130-200 (1.5-2 hours).',
+  },
+  {
+    question: 'Do I need to book ferries in advance?',
+    answer: 'No, you can usually buy tickets at the port on the day of travel. The only exception is during Holy Week (Easter) when ferries fill up quickly - book a few days ahead during that period.',
+  },
+  {
+    question: 'Which port should I arrive at in Siquijor?',
+    answer: 'Ferries arrive at either Siquijor Port (east coast) or Larena Port (north coast). Most tourists head to San Juan on the west coast - tricycle fare is ₱200-400 from either port.',
+  },
+  {
+    question: 'Can I bring a motorcycle on the ferry?',
+    answer: 'Yes, the slow ferries (Montenegro Lines, GL Shipping) accept motorcycles for an additional fee. OceanJet fast ferries do not allow vehicles. Most visitors rent motorcycles on the island instead.',
+  },
+  {
+    question: 'What time is the last ferry to Siquijor?',
+    answer: 'The last ferry from Dumaguete typically departs around 5-6 PM, but schedules vary. Morning ferries are more reliable. If arriving late, arrange accommodation pickup in advance as tricycle availability decreases after dark.',
+  },
+];
+---
+
+<BaseLayout
+  title="Getting to Siquijor"
+  description="Complete guide on how to get to Siquijor Island, Philippines. Ferry schedules from Dumaguete, Cebu, and Bohol, plus tips for smooth travel."
+>
+  <main class="py-24 lg:py-32">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Breadcrumbs -->
+      <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'Getting There' }]} />
+      </div>
+
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+          Getting to Siquijor
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+          Your complete guide to reaching the mystical island
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-stone dark:prose-invert max-w-none">
+        <h2>Overview</h2>
+        <p>
+          Siquijor is accessible only by sea. There's no airport on the island, so all visitors
+          arrive by ferry. The main entry points are from Dumaguete (most common), Bohol, and
+          occasionally Cebu.
+        </p>
+
+        <h2>From Dumaguete (Most Popular)</h2>
+        <p>
+          Dumaguete is the gateway city to Siquijor. It's well-connected by air and sea,
+          making it the easiest jumping-off point.
+        </p>
+
+        <h3>Getting to Dumaguete</h3>
+        <ul>
+          <li><strong>By Air:</strong> Dumaguete-Sibulan Airport (DGT) has flights from Manila and Cebu via Cebu Pacific and Philippine Airlines</li>
+          <li><strong>By Sea from Cebu:</strong> OceanJet fast ferry (4 hours) or overnight slow ferry</li>
+          <li><strong>By Bus:</strong> From Cebu City via bus to the south then ferry (long but scenic)</li>
+        </ul>
+
+        <h3>Ferries to Siquijor from Dumaguete</h3>
+
+        <div class="not-prose my-8">
+          <div class="bg-white dark:bg-volcanic-800 rounded-2xl border border-stone-200 dark:border-volcanic-700 overflow-hidden">
+            <table class="w-full">
+              <thead class="bg-stone-50 dark:bg-volcanic-900">
+                <tr>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-stone-900 dark:text-stone-100">Ferry</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-stone-900 dark:text-stone-100">Duration</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-stone-900 dark:text-stone-100">Frequency</th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold text-stone-900 dark:text-stone-100">Price (est.)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-stone-200 dark:divide-volcanic-700">
+                <tr>
+                  <td class="px-6 py-4 text-stone-700 dark:text-stone-300">OceanJet</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">45-60 min</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">4-5x daily</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">₱300-400</td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4 text-stone-700 dark:text-stone-300">Montenegro Lines</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">1.5-2 hours</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">3-4x daily</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">₱150-200</td>
+                </tr>
+                <tr>
+                  <td class="px-6 py-4 text-stone-700 dark:text-stone-300">GL Shipping</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">2 hours</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">2-3x daily</td>
+                  <td class="px-6 py-4 text-stone-600 dark:text-stone-400">₱130-180</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <ProTip>
+          OceanJet is fastest but pricier. Montenegro and GL Shipping are budget-friendly and allow
+          you to ride on deck with views. Buy tickets at the port - no advance booking usually needed
+          except during Holy Week.
+        </ProTip>
+
+        <h2>From Bohol</h2>
+        <p>
+          Direct ferries connect Tagbilaran (Bohol) to Larena port in Siquijor. This is ideal if
+          you're combining Bohol and Siquijor in one trip.
+        </p>
+
+        <h3>Ferries from Tagbilaran to Siquijor</h3>
+        <ul>
+          <li><strong>OceanJet:</strong> 2-3 departures daily, approximately 2 hours, ₱500-700</li>
+          <li><strong>Lite Shipping:</strong> Slower RORO ferry, approximately 3-4 hours, budget option</li>
+        </ul>
+
+        <Warning>
+          Ferry schedules from Bohol change frequently. Always verify current schedules before your trip.
+          Rough seas during monsoon season (June-October) can cause cancellations.
+        </Warning>
+
+        <h2>From Cebu</h2>
+        <p>
+          There's no direct ferry from Cebu City to Siquijor. You have two options:
+        </p>
+
+        <h3>Option 1: Via Dumaguete (Recommended)</h3>
+        <ol>
+          <li>Take OceanJet from Cebu to Dumaguete (4 hours)</li>
+          <li>Transfer to Siquijor ferry (1 hour)</li>
+          <li>Total: approximately 5-6 hours with transfer time</li>
+        </ol>
+
+        <h3>Option 2: Via Bohol</h3>
+        <ol>
+          <li>Take ferry from Cebu to Tagbilaran, Bohol (2 hours)</li>
+          <li>Transfer to Siquijor ferry (2 hours)</li>
+          <li>Total: approximately 5-6 hours with transfer time</li>
+        </ol>
+
+        <h2>Arriving in Siquijor</h2>
+        <p>
+          Ferries arrive at either <strong>Siquijor Port</strong> (Siquijor Town, east coast) or
+          <strong>Larena Port</strong> (north coast). Both are functional towns but not tourist
+          destinations. Most visitors head to San Juan on the west coast.
+        </p>
+
+        <h3>From the Port to Your Accommodation</h3>
+        <ul>
+          <li><strong>Tricycle:</strong> ₱200-400 to San Juan (negotiate before boarding)</li>
+          <li><strong>Hotel Pickup:</strong> Many accommodations offer free or paid pickup - arrange in advance</li>
+          <li><strong>Motorcycle Rental:</strong> Some rental shops near ports, but availability varies</li>
+        </ul>
+
+        <ProTip>
+          If arriving on a late ferry, arrange accommodation pickup in advance. Tricycle availability
+          decreases after dark, and prices increase.
+        </ProTip>
+
+        <h2>Practical Tips</h2>
+
+        <h3>Best Time to Travel</h3>
+        <ul>
+          <li><strong>Morning ferries:</strong> Most reliable, calmer seas</li>
+          <li><strong>Avoid night ferries:</strong> Limited options, harder logistics on arrival</li>
+          <li><strong>Off-season:</strong> Fewer crowds, same schedules</li>
+        </ul>
+
+        <h3>What to Bring</h3>
+        <ul>
+          <li>Cash (withdraw in Dumaguete - Siquijor ATMs can run out)</li>
+          <li>Motion sickness medication if prone</li>
+          <li>Light jacket (AC ferries can be cold)</li>
+          <li>Charged phone with accommodation details</li>
+          <li>Water and snacks</li>
+        </ul>
+
+        <h3>Ferry Tips</h3>
+        <ul>
+          <li>Arrive 30-45 minutes before departure</li>
+          <li>Keep your ticket - it's checked on boarding</li>
+          <li>Open-air seating on slow ferries offers best views</li>
+          <li>Watch your belongings but theft is rare</li>
+        </ul>
+
+        <h2>Leaving Siquijor</h2>
+        <p>
+          The same ferry lines operate in reverse. Book your return based on your onward travel:
+        </p>
+        <ul>
+          <li><strong>Flying out of Dumaguete:</strong> Early ferry, then taxi to airport</li>
+          <li><strong>Heading to Bohol:</strong> Direct ferry from Larena</li>
+          <li><strong>Going to Cebu:</strong> Via Dumaguete or Bohol</li>
+        </ul>
+
+        <!-- FAQ Section -->
+        <div class="not-prose">
+          <FAQ faqs={faqs} title="Common Questions About Getting to Siquijor" />
+        </div>
+
+        <div class="not-prose my-8">
+          <div class="bg-jungle-50 dark:bg-jungle-900/20 rounded-2xl p-8 border border-jungle-200 dark:border-jungle-800">
+            <h3 class="text-xl font-bold text-stone-900 dark:text-stone-100 mb-4">Need More Help?</h3>
+            <p class="text-stone-600 dark:text-stone-400 mb-4">
+              Check our detailed planning guides for more information:
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="/articles/planning/solo-travel-guide" class="btn-primary text-sm">Solo Travel Guide</a>
+              <a href="/articles/seasonal/best-time-to-visit" class="btn-ghost text-sm border border-stone-200 dark:border-volcanic-700">Best Time to Visit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

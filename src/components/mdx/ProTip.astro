@@ -1,0 +1,86 @@
+---
+interface Props {
+  title?: string;
+  type?: 'tip' | 'insider' | 'save-money' | 'time-saver';
+}
+
+const { title, type = 'tip' } = Astro.props;
+
+const typeConfig = {
+  tip: {
+    icon: 'lightbulb',
+    color: 'jungle',
+    defaultTitle: 'Pro Tip',
+  },
+  insider: {
+    icon: 'star',
+    color: 'amber',
+    defaultTitle: 'Insider Knowledge',
+  },
+  'save-money': {
+    icon: 'wallet',
+    color: 'reef',
+    defaultTitle: 'Save Money',
+  },
+  'time-saver': {
+    icon: 'clock',
+    color: 'jungle',
+    defaultTitle: 'Time Saver',
+  },
+};
+
+const config = typeConfig[type];
+const displayTitle = title || config.defaultTitle;
+
+const icons = {
+  lightbulb: `<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path>`,
+  star: `<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>`,
+  wallet: `<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>`,
+  clock: `<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>`,
+};
+
+const colorClasses = {
+  jungle: {
+    bg: 'bg-jungle-50 dark:bg-jungle-900/20',
+    border: 'border-jungle-200 dark:border-jungle-800',
+    icon: 'text-jungle-600 dark:text-jungle-400',
+    title: 'text-jungle-800 dark:text-jungle-300',
+  },
+  amber: {
+    bg: 'bg-amber-50 dark:bg-amber-900/20',
+    border: 'border-amber-200 dark:border-amber-800',
+    icon: 'text-amber-600 dark:text-amber-400',
+    title: 'text-amber-800 dark:text-amber-300',
+  },
+  reef: {
+    bg: 'bg-reef-50 dark:bg-reef-900/20',
+    border: 'border-reef-200 dark:border-reef-800',
+    icon: 'text-reef-600 dark:text-reef-400',
+    title: 'text-reef-800 dark:text-reef-300',
+  },
+};
+
+const colors = colorClasses[config.color as keyof typeof colorClasses];
+---
+
+<div class:list={[
+  'rounded-xl border p-4 my-6',
+  colors.bg,
+  colors.border,
+]}>
+  <div class="flex items-start gap-3">
+    <div class:list={['flex-shrink-0 mt-0.5', colors.icon]}>
+      <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <Fragment set:html={icons[config.icon as keyof typeof icons]} />
+      </svg>
+    </div>
+    <div>
+      <p class:list={['font-semibold text-sm mb-1', colors.title]}>
+        {displayTitle}
+      </p>
+      <div class="text-sm text-stone-700 dark:text-stone-300 [&>p]:m-0">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>

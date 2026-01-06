@@ -1,0 +1,99 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro';
+import { SITE } from '@/utils/constants';
+---
+
+<BaseLayout
+  title="About Siquijor.xyz"
+  description="Discover the real Siquijor through honest travel guides. From Cambugahay Falls to traditional healers, we share authentic experiences on the Philippines' mystical island."
+>
+  <main class="py-24 lg:py-32">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Breadcrumbs -->
+      <div class="mb-8">
+        <Breadcrumbs items={[{ label: 'About' }]} />
+      </div>
+
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+          About {SITE.name}
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+          Honest guides to Siquijor's best experiences—no tourist traps, just real adventures
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-stone dark:prose-invert max-w-none">
+        <h2>Why We Built This</h2>
+        <p>
+          Siquijor is different. While places like Siargao, Bohol, and Cebu have become polished tourist destinations,
+          Siquijor remains refreshingly raw. The island is less built up, less crowded, and way more
+          low-key. That's exactly why travelers who discover it often call it their favorite island in the Philippines.
+        </p>
+        <p>
+          We created Siquijor.xyz to help you experience the island the right way—with practical information,
+          honest recommendations, and none of the hype that plagues most travel content.
+        </p>
+
+        <h2>The Real Siquijor</h2>
+        <p>
+          Known as "Isla del Fuego" (Island of Fire) for the mysterious glow once visible from passing ships,
+          Siquijor has a reputation that precedes it. Many Filipinos avoid the island due to stories of
+          witchcraft and dark magic. The reality? Most residents are ordinary Catholics, the traditional
+          healers (mananambal) practice an ancient art that predates colonization, and the only magic
+          you'll find is in the turquoise waters of Cambugahay Falls.
+        </p>
+        <p>
+          What makes Siquijor special isn't the mysticism—it's the experience of circling the entire island
+          on a scooter in 3 hours, stopping wherever looks interesting. It's watching sunset at Paliton Beach
+          with palm trees silhouetted against orange skies. It's the 100-peso entrance fees and 250-peso
+          scooter rentals that make everything accessible.
+        </p>
+
+        <h2>What We Actually Cover</h2>
+        <p>
+          Every guide on this site is based on real experiences. We tell you:
+        </p>
+        <ul>
+          <li><strong>What's worth your time</strong> — Cambugahay Falls, Paliton Beach, cliff jumping at Salagdoong</li>
+          <li><strong>What you can skip</strong> — The Butterfly Sanctuary (tourist trap vibes), the Balete Tree (done in 5 minutes)</li>
+          <li><strong>Actual costs</strong> — Entrance fees, scooter rentals, what to pay for guides</li>
+          <li><strong>When to go</strong> — Arrive at Cambugahay before 9 AM, avoid Holy Week unless you want chaos</li>
+          <li><strong>How to respect local culture</strong> — Especially when visiting traditional healers</li>
+        </ul>
+
+        <h2>Getting Around</h2>
+        <p>
+          Here's what most guides won't tell you: you need a scooter. At 250 pesos per day (about $4.50),
+          it gives you complete freedom to explore. The roads are well-paved, traffic is nearly nonexistent,
+          and you can spontaneously stop at any beach, waterfall, or viewpoint. Tricycles and habal-habal
+          (motorcycle taxis) work too, but you'll spend more time waiting than exploring.
+        </p>
+
+        <h2>Best Time to Visit</h2>
+        <p>
+          Dry season (November to May) is ideal, with April to July being the hottest months.
+          Avoid Holy Week in April—ferries are packed, accommodations sell out, and power cuts are common.
+          The shoulder months offer the best balance of good weather and fewer crowds.
+        </p>
+
+        <h2>Our Commitment</h2>
+        <p>
+          We don't accept payment for recommendations. When we say Cambugahay Falls is a must-see and the
+          Butterfly Sanctuary isn't worth it, that's our honest opinion. We believe sustainable tourism
+          means directing visitors to experiences that benefit local communities while preserving what
+          makes Siquijor special.
+        </p>
+
+        <h2>Get in Touch</h2>
+        <p>
+          Have a question, found outdated information, or discovered something we should know about?
+          We'd love to hear from you. Visit our <a href="/contact">contact page</a> or reach out directly.
+        </p>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

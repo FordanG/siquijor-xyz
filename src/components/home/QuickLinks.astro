@@ -1,0 +1,73 @@
+---
+const quickLinks = [
+  {
+    icon: 'calendar',
+    title: 'Best Time to Visit',
+    description: 'Month-by-month weather and crowd guide',
+    href: '/articles/seasonal/best-time-to-visit',
+  },
+  {
+    icon: 'shield',
+    title: 'Is Siquijor Safe?',
+    description: 'Myths debunked and practical safety tips',
+    href: '/articles/planning/safety-guide',
+  },
+  {
+    icon: 'map',
+    title: 'Getting There',
+    description: 'Ferry schedules and travel logistics',
+    href: '/getting-there',
+  },
+  {
+    icon: 'wallet',
+    title: 'Budget Guide',
+    description: 'Cost breakdown for every travel style',
+    href: '/budget-guide',
+  },
+];
+
+const iconPaths: Record<string, string> = {
+  calendar: '<path d="M8 2v4m8-4v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path>',
+  shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path>',
+  map: '<path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"></path><path d="M15 5.764v15m-6-18v15"></path>',
+  wallet: '<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path>',
+};
+---
+
+<section class="py-20 px-6 bg-white dark:bg-volcanic-900 border-t border-stone-200 dark:border-volcanic-800">
+  <div class="max-w-7xl mx-auto">
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4 font-display">
+        Planning Your Trip
+      </h2>
+      <p class="text-stone-600 dark:text-volcanic-400 max-w-xl mx-auto">
+        Everything you need to know before visiting the mystical island.
+      </p>
+    </div>
+
+    <!-- Links Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {quickLinks.map((link) => (
+        <a
+          href={link.href}
+          class="group bg-cream dark:bg-volcanic-800 rounded-2xl p-6 border border-stone-200 dark:border-volcanic-700 hover:border-jungle-300 dark:hover:border-jungle-600 transition-all hover:-translate-y-1"
+        >
+          <div class="w-12 h-12 rounded-xl bg-jungle-100 dark:bg-jungle-900/30 flex items-center justify-center text-jungle-700 dark:text-jungle-400 mb-4 group-hover:bg-jungle-200 dark:group-hover:bg-jungle-800/30 transition-colors">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <Fragment set:html={iconPaths[link.icon]} />
+            </svg>
+          </div>
+
+          <h3 class="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2 group-hover:text-jungle-700 dark:group-hover:text-amber-400 transition-colors">
+            {link.title}
+          </h3>
+
+          <p class="text-sm text-stone-600 dark:text-volcanic-400">
+            {link.description}
+          </p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

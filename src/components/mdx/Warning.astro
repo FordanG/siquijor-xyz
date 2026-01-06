@@ -1,0 +1,74 @@
+---
+interface Props {
+  title?: string;
+  severity?: 'info' | 'caution' | 'warning' | 'danger';
+}
+
+const { title, severity = 'warning' } = Astro.props;
+
+const severityConfig = {
+  info: {
+    icon: 'info',
+    defaultTitle: 'Good to Know',
+    bg: 'bg-blue-50 dark:bg-blue-900/20',
+    border: 'border-blue-200 dark:border-blue-800',
+    icon_color: 'text-blue-600 dark:text-blue-400',
+    title_color: 'text-blue-800 dark:text-blue-300',
+  },
+  caution: {
+    icon: 'info',
+    defaultTitle: 'Good to Know',
+    bg: 'bg-blue-50 dark:bg-blue-900/20',
+    border: 'border-blue-200 dark:border-blue-800',
+    icon_color: 'text-blue-600 dark:text-blue-400',
+    title_color: 'text-blue-800 dark:text-blue-300',
+  },
+  warning: {
+    icon: 'alert-triangle',
+    defaultTitle: 'Important',
+    bg: 'bg-amber-50 dark:bg-amber-900/20',
+    border: 'border-amber-200 dark:border-amber-800',
+    icon_color: 'text-amber-600 dark:text-amber-400',
+    title_color: 'text-amber-800 dark:text-amber-300',
+  },
+  danger: {
+    icon: 'alert-octagon',
+    defaultTitle: 'Safety Warning',
+    bg: 'bg-red-50 dark:bg-red-900/20',
+    border: 'border-red-200 dark:border-red-800',
+    icon_color: 'text-red-600 dark:text-red-400',
+    title_color: 'text-red-800 dark:text-red-300',
+  },
+};
+
+const config = severityConfig[severity];
+const displayTitle = title || config.defaultTitle;
+
+const icons = {
+  info: `<circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path>`,
+  'alert-triangle': `<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path>`,
+  'alert-octagon': `<polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><path d="M12 8v4"></path><path d="M12 16h.01"></path>`,
+};
+---
+
+<div class:list={[
+  'rounded-xl border p-4 my-6',
+  config.bg,
+  config.border,
+]}>
+  <div class="flex items-start gap-3">
+    <div class:list={['flex-shrink-0 mt-0.5', config.icon_color]}>
+      <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <Fragment set:html={icons[config.icon as keyof typeof icons]} />
+      </svg>
+    </div>
+    <div>
+      <p class:list={['font-semibold text-sm mb-1', config.title_color]}>
+        {displayTitle}
+      </p>
+      <div class="text-sm text-stone-700 dark:text-stone-300 [&>p]:m-0">
+        <slot />
+      </div>
+    </div>
+  </div>
+</div>

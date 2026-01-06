@@ -1,0 +1,80 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you're looking for doesn't exist or has been moved."
+  noIndex={true}
+>
+  <section class="min-h-[70vh] flex items-center justify-center px-6">
+    <div class="text-center max-w-lg">
+      <!-- 404 Icon -->
+      <div class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-jungle-100 dark:bg-jungle-900/30 mb-8">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-12 h-12 text-jungle-600 dark:text-jungle-400"
+        >
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="m15 9-6 6"></path>
+          <path d="m9 9 6 6"></path>
+        </svg>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-4 font-display">
+        Lost in Paradise
+      </h1>
+
+      <!-- Description -->
+      <p class="text-lg text-stone-600 dark:text-volcanic-400 mb-8">
+        Looks like you've wandered off the beaten path. The page you're looking for doesn't exist or has been moved to a new location.
+      </p>
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/" class="btn-primary">
+          Back to Home
+        </a>
+        <a href="/articles" class="btn-ghost">
+          Browse Articles
+        </a>
+      </div>
+
+      <!-- Helpful Links -->
+      <div class="mt-12 pt-8 border-t border-stone-200 dark:border-volcanic-700">
+        <p class="text-sm text-stone-500 dark:text-volcanic-400 mb-4">
+          Try one of these popular pages:
+        </p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a
+            href="/category/adventure"
+            class="text-sm text-jungle-700 dark:text-amber-400 hover:underline"
+          >
+            Adventure
+          </a>
+          <span class="text-stone-300 dark:text-volcanic-600">•</span>
+          <a
+            href="/category/photography"
+            class="text-sm text-jungle-700 dark:text-amber-400 hover:underline"
+          >
+            Photography
+          </a>
+          <span class="text-stone-300 dark:text-volcanic-600">•</span>
+          <a
+            href="/articles/seasonal/best-time-to-visit"
+            class="text-sm text-jungle-700 dark:text-amber-400 hover:underline"
+          >
+            Best Time to Visit
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

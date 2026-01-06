@@ -1,0 +1,129 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/utils/constants';
+---
+
+<BaseLayout
+  title="Terms of Service"
+  description="Terms of Service for Siquijor.xyz - Please read these terms carefully before using our website."
+  noIndex={true}
+>
+  <main class="py-24 lg:py-32">
+    <div class="max-w-4xl mx-auto px-6">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-6 font-display">
+          Terms of Service
+        </h1>
+        <p class="text-lg text-stone-600 dark:text-stone-400">
+          Last updated: January 2025
+        </p>
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-stone dark:prose-invert max-w-none">
+        <h2>Agreement to Terms</h2>
+        <p>
+          By accessing and using {SITE.name}, you agree to be bound by these Terms of Service.
+          If you disagree with any part of these terms, you may not access the website.
+        </p>
+
+        <h2>Use of Our Website</h2>
+        <p>
+          {SITE.name} provides travel information and guides about Siquijor Island, Philippines.
+          By using our website, you agree to:
+        </p>
+        <ul>
+          <li>Use the website only for lawful purposes</li>
+          <li>Not attempt to gain unauthorized access to our systems</li>
+          <li>Not interfere with the proper functioning of the website</li>
+          <li>Not use the website to transmit malware or other harmful code</li>
+        </ul>
+
+        <h2>Disclaimer of Warranties</h2>
+        <p>
+          The information on {SITE.name} is provided "as is" without warranties of any kind,
+          either express or implied. We do not warrant that:
+        </p>
+        <ul>
+          <li>The information is accurate, complete, or current</li>
+          <li>The website will be available at all times without interruption</li>
+          <li>The website is free of errors or viruses</li>
+        </ul>
+
+        <h2>Travel Information Disclaimer</h2>
+        <p>
+          <strong>Important:</strong> The travel information, including but not limited to prices,
+          schedules, conditions, and safety information, is subject to change without notice.
+          We strongly recommend that you:
+        </p>
+        <ul>
+          <li>Verify all information before making travel decisions</li>
+          <li>Check current conditions and requirements with local authorities</li>
+          <li>Obtain appropriate travel insurance</li>
+          <li>Exercise caution and use your own judgment when engaging in any activities</li>
+        </ul>
+
+        <h2>Limitation of Liability</h2>
+        <p>
+          {SITE.name} and its operators shall not be liable for any direct, indirect, incidental,
+          consequential, or punitive damages arising from:
+        </p>
+        <ul>
+          <li>Your use of or inability to use the website</li>
+          <li>Any errors or omissions in the content</li>
+          <li>Any action taken based on the information provided</li>
+          <li>Any personal injury or property damage resulting from activities described</li>
+        </ul>
+
+        <h2>Intellectual Property</h2>
+        <p>
+          The content on {SITE.name}, including text, images, graphics, and logos, is protected
+          by copyright and other intellectual property laws. You may not:
+        </p>
+        <ul>
+          <li>Reproduce, distribute, or modify content without permission</li>
+          <li>Use content for commercial purposes without authorization</li>
+          <li>Remove any copyright or proprietary notices</li>
+        </ul>
+
+        <h2>External Links</h2>
+        <p>
+          Our website may contain links to external websites. We are not responsible for the
+          content, privacy practices, or availability of these external sites.
+        </p>
+
+        <h2>User-Generated Content</h2>
+        <p>
+          If you submit content to our website (such as comments or suggestions), you grant
+          us a non-exclusive, royalty-free license to use, modify, and display that content.
+        </p>
+
+        <h2>Indemnification</h2>
+        <p>
+          You agree to indemnify and hold harmless {SITE.name} and its operators from any
+          claims, damages, or expenses arising from your use of the website or violation
+          of these terms.
+        </p>
+
+        <h2>Governing Law</h2>
+        <p>
+          These terms shall be governed by and construed in accordance with the laws of
+          the Philippines, without regard to its conflict of law provisions.
+        </p>
+
+        <h2>Changes to Terms</h2>
+        <p>
+          We reserve the right to modify these terms at any time. Continued use of the
+          website after changes constitutes acceptance of the new terms.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          For questions about these Terms of Service, please contact us at
+          <a href="mailto:legal@siquijor.xyz">legal@siquijor.xyz</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
