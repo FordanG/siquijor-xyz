@@ -18,6 +18,10 @@ export default defineConfig({
         !page.includes('/404'),
       changefreq: 'weekly',
       priority: 0.7,
+      serialize: (item) => ({
+        ...item,
+        lastmod: new Date().toISOString(),
+      }),
       customPages: ['https://siquijor.xyz/travel-guide'],
     }),
   ],
